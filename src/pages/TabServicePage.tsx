@@ -5,6 +5,7 @@ import { StatsRow } from '@/components/sections/StatsRow'
 import { Tabs, panelProps } from '@/components/sections/Tabs'
 import { Faq } from '@/components/sections/Faq'
 import { Cta } from '@/components/Cta'
+import { ReadMore } from '@/components/sections/ReadMore'
 import { marketingStats } from '@/data/pages'
 import type { TabService } from '@/data/services'
 import type { ReactNode } from 'react'
@@ -32,6 +33,7 @@ export function TabServicePage({ data, children }: { data: TabService; children?
               <motion.div key={tab} initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}>
                 <p className="font-display text-sm font-bold text-tang tabular-nums">{String(tab + 1).padStart(2, '0')} / {String(data.tabs.length).padStart(2, '0')}</p>
                 <h2 className="mt-3 text-3xl font-extrabold md:text-5xl">{t.label}</h2>
+                <ReadMore resetKey={tab} collapsedHeight={380}>
                 <div className="mt-8 grid max-w-[68ch] gap-6 text-lg text-mist">
                   {t.body.map((p, i) => (
                     <p key={i}>{p.lead && <strong className="mb-1 block font-display text-xl leading-snug font-semibold text-bone">{p.lead}</strong>}{p.text}</p>
@@ -43,6 +45,7 @@ export function TabServicePage({ data, children }: { data: TabService; children?
                   )}
                   {t.after?.map((p, i) => <p key={i}>{p.text}</p>)}
                 </div>
+                </ReadMore>
                 <div className="mt-10"><Cta href="#quote">Get a quote</Cta></div>
               </motion.div>
             </AnimatePresence>
@@ -55,7 +58,7 @@ export function TabServicePage({ data, children }: { data: TabService; children?
       {data.faqs && (
         <section className="section pt-0">
           <div className="wrap grid gap-10 lg:grid-cols-[1fr_2fr]">
-            <h2 className="text-4xl font-extrabold md:text-5xl">Frequently Asked Questions</h2>
+            <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-5xl">Frequently Asked Questions</h2>
             <Faq items={data.faqs} />
           </div>
         </section>

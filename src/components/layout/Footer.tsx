@@ -25,11 +25,11 @@ export function Footer() {
         </Marquee>
       </div>
 
-      <div className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div>
-          <h3 className="text-3xl font-extrabold">Let's Talk!</h3>
+      <div className="wrap grid grid-cols-2 gap-x-6 gap-y-10 py-10 sm:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12 lg:py-16">
+        <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+          <h3 className="text-2xl font-extrabold lg:text-3xl">Let's Talk!</h3>
           <p className="mt-3 max-w-[36ch] text-mist">Thanks for stopping by! We’re here to help, please don’t hesitate to reach out.</p>
-          <div className="mt-6 grid max-w-sm gap-2">
+          <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:max-w-sm lg:grid-cols-1">
             <CopyChip label="WhatsApp" value={contact.whatsapp} href={contact.whatsappUrl} />
             <CopyChip label="We'd love to hear from you" value={contact.email} href={`mailto:${contact.email}`} />
           </div>
@@ -41,14 +41,14 @@ export function Footer() {
         ].map((col) => (
           <nav key={col.title} aria-label={col.title}>
             <p className="font-display text-sm font-bold text-mist">{col.title}</p>
-            <ul className="mt-4 grid gap-2.5">
+            <ul className="mt-3 grid gap-2 lg:mt-4 lg:gap-2.5">
               {col.links.map((l) => <li key={l.to}><Link to={l.to} className="text-[15px] hover:text-tang">{l.label}</Link></li>)}
             </ul>
           </nav>
         ))}
       </div>
 
-      <div className="wrap flex flex-wrap items-center justify-between gap-3 border-t border-line py-6 text-sm text-mist">
+      <div className="wrap flex flex-wrap items-center justify-between gap-2 border-t border-line py-5 text-sm text-mist lg:gap-3 lg:py-6">
         <span>© {new Date().getFullYear()} FUNKYY APPS</span>
         <span>Experts in Web Design, Product Development &amp; Search Engine Marketing</span>
       </div>

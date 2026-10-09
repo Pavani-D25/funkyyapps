@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Paperclip } from 'lucide-react'
 import { PageHero } from '@/components/sections/PageHero'
 import { Cta } from '@/components/Cta'
+import { SwipeRow } from '@/components/sections/SwipeRow'
 import { FormNotice } from '@/components/sections/FormNotice'
 import { sendForm, type SendResult } from '@/lib/forms'
 import { fontStyles, logoTypes, questionnaires, type QField } from '@/data/pages'
@@ -74,19 +75,19 @@ export function QuestionnairePage({ slug }: { slug: string }) {
         </form>
 
         {q.logoGuide && (
-          <div className="mt-24">
-            <h2 className="text-4xl font-extrabold md:text-5xl">Logo Types</h2>
+          <div className="mt-16 lg:mt-24">
+            <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-5xl">Logo Types</h2>
             <p className="mt-4 max-w-[60ch] text-mist">Please select ONE category &gt; Font Based Or Icon Based &gt; Then Check One Sub-Category Of That</p>
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <SwipeRow label="Logo types" desktopClassName="lg:grid-cols-4 lg:gap-4" itemClassName="w-[72%] sm:w-[44%]" className="mt-8 lg:mt-10">
               {logoTypes.map((l) => (
-                <div key={l.name} className="rounded-[22px] border border-line bg-ink-2 p-4">
+                <div key={l.name} className="h-full rounded-[22px] border border-line bg-ink-2 p-4">
                   <LogoDemo name={l.name} />
                   <h3 className="mt-4 px-1 text-lg font-bold">{l.name}</h3>
                   <p className="mt-2 px-1 pb-2 text-[15px] text-mist">{l.text}</p>
                 </div>
               ))}
-            </div>
-            <h2 className="mt-20 text-4xl font-extrabold md:text-5xl">Font Style</h2>
+            </SwipeRow>
+            <h2 className="mt-14 lg:mt-20 text-[1.8rem] font-extrabold sm:text-4xl md:text-5xl">Font Style</h2>
             <ul className="mt-8 flex flex-wrap gap-2">{fontStyles.map((f) => <li key={f} className="rounded-full border border-line px-4 py-2">{f}</li>)}</ul>
           </div>
         )}

@@ -1,5 +1,6 @@
 import { PageHero } from '@/components/sections/PageHero'
 import { TiltCard } from '@/components/sections/TiltCard'
+import { SwipeRow } from '@/components/sections/SwipeRow'
 import { Cta } from '@/components/Cta'
 import { shop } from '@/data/pages'
 import { contact, packages, paypal } from '@/data/site'
@@ -26,12 +27,12 @@ export function Shop() {
   return (
     <>
       <PageHero title="Shop" kicker="Packages" />
-      <section className="wrap grid gap-6 pb-20 md:grid-cols-2">
+      <SwipeRow label="Packages" desktopClassName="lg:grid-cols-2 lg:gap-6" className="wrap pb-16 lg:pb-20">
         {shop.map((s) => {
           const name = PKG[s.kind]
           const link = paypal[name] || `${contact.whatsappUrl}?text=${encodeURIComponent(`Hi FunkyyApps, I'd like the ${s.title} (${s.price}) package.`)}`
           return (
-            <TiltCard key={s.title} max={4} className="flex flex-col overflow-hidden rounded-[28px] border border-line bg-ink-2">
+            <TiltCard key={s.title} max={4} className="flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-ink-2">
               <div className="grid aspect-[16/9] place-items-center" style={{ background: TINT[s.kind] }}><Art kind={s.kind} /></div>
               <div className="flex flex-1 flex-col p-7">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -44,7 +45,7 @@ export function Shop() {
             </TiltCard>
           )
         })}
-      </section>
+      </SwipeRow>
     </>
   )
 }

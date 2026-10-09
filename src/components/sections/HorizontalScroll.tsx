@@ -14,12 +14,12 @@ export function HorizontalScroll({ children }: { children: ReactNode }) {
   const x = useTransform(scrollYProgress, [0, 1], [0, -dist])
   return (
     <>
-      <div ref={outer} className="relative hidden md:block" style={{ height: `calc(100vh + ${dist}px)` }}>
+      <div ref={outer} className="relative hidden lg:block" style={{ height: `calc(100vh + ${dist}px)` }}>
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div ref={track} style={{ x }} className="flex gap-6 pl-[max(24px,calc((100vw-1240px)/2+40px))]">{children}</motion.div>
         </div>
       </div>
-      <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:hidden">{children}</div>
+      <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-[clamp(16px,4vw,40px)] pb-4 [scroll-padding-inline:clamp(16px,4vw,40px)] lg:hidden">{children}</div>
     </>
   )
 }

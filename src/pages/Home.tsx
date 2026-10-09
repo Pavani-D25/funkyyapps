@@ -13,12 +13,15 @@ import { MagicCard } from '@/components/ui/magic-card'
 import { TextReveal } from '@/components/ui/text-reveal'
 import { HoverExpand } from '@/components/fx/HoverExpand'
 import { StickyStack } from '@/components/ui/skiper-ui/skiper16'
+import { SwipeRow } from '@/components/sections/SwipeRow'
+import { useState } from 'react'
 import { capabilities, contact, hero, industries, plans, platforms, servicesNav, testimonials, type Plan } from '@/data/site'
 import { cn } from '@/lib/utils'
 
 
+const MANIFESTO = 'At FunkyyApps, we help visualize your ideas/goals into reality. With over 7 years of industry excellence, we fuse cutting-edge design with advanced development to deliver bold, future-ready solutions.'
+
 export function Home() {
-  const half = Math.ceil(testimonials.length / 2)
   const cols = [testimonials.slice(0, 3), testimonials.slice(3, 6), testimonials.slice(6)]
   return (
     <>
@@ -53,7 +56,7 @@ export function Home() {
       {/* ───────── Trusted By: Magic UI 3D marquee (desktop) / two rows (mobile) ───────── */}
       <section className="section pt-10">
         <div className="wrap grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <h2 className="max-w-[14ch] text-4xl font-extrabold md:text-6xl">
+          <h2 className="max-w-[14ch] text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">
             Trusted By <span className="text-butter"><NumberTicker value={100} />+</span> Brand Owners
           </h2>
           <div className="relative hidden h-[560px] items-center justify-center overflow-hidden [perspective:900px] lg:flex">
@@ -70,16 +73,18 @@ export function Home() {
             <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 bg-linear-to-l from-ink" />
           </div>
         </div>
-        <div className="relative mt-12 grid gap-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] lg:hidden">
-          <Marquee pauseOnHover repeat={2} className="[--duration:55s] [--gap:1.25rem]">{testimonials.slice(0, half).map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>
-          <Marquee pauseOnHover reverse repeat={2} className="[--duration:60s] [--gap:1.25rem]">{testimonials.slice(half).map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>
+        {/* phones/tablets: one row (all testimonials) instead of two */}
+        <div className="relative mt-8 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] lg:hidden">
+          <Marquee pauseOnHover repeat={2} className="[--duration:90s] [--gap:1rem]">{testimonials.map((t) => <TestimonialCard key={t.name} t={t} className="self-start" />)}</Marquee>
         </div>
       </section>
 
       {/* ───────── Manifesto: Magic UI "Text Reveal" ───────── */}
       <section className="pt-0">
-        <TextReveal className="h-[160vh]" frameClassName="wrap max-w-[1240px]" textClassName="max-w-[24ch] p-0 font-display text-[clamp(1.8rem,4.6vw,4rem)] leading-[1.08] font-bold tracking-tight md:p-0 lg:p-0 dark:text-bone/20">
-          At FunkyyApps, we help visualize your ideas/goals into reality. With over 7 years of industry excellence, we fuse cutting-edge design with advanced development to deliver bold, future-ready solutions.
+        {/* phones/tablets: the same sentence as a plain paragraph (no extra scroll room) */}
+        <p className="wrap pb-12 font-display text-[clamp(1.3rem,5vw,2.2rem)] leading-[1.15] font-bold tracking-tight lg:hidden">{MANIFESTO}</p>
+        <TextReveal className="hidden h-[160vh] lg:block" frameClassName="wrap max-w-[1240px]" textClassName="max-w-[24ch] p-0 font-display text-[clamp(1.8rem,4.6vw,4rem)] leading-[1.08] font-bold tracking-tight md:p-0 lg:p-0 dark:text-bone/20">
+          {MANIFESTO}
         </TextReveal>
       </section>
 
@@ -87,7 +92,7 @@ export function Home() {
       <section className="section pt-0">
         <div className="wrap">
           <div className="mb-10 grid gap-6 md:grid-cols-2 md:items-end">
-            <h2 className="text-4xl font-extrabold md:text-5xl lg:text-6xl">Discover Our Excellence</h2>
+            <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-5xl lg:text-6xl">Discover Our Excellence</h2>
             <p className="max-w-[48ch] text-mist md:justify-self-end">Explore our cutting-edge websites across various industries. Each project exemplifies our commitment to superior quality, innovation, and technical prowess.</p>
           </div>
           <HoverExpand items={industries} />
@@ -110,31 +115,33 @@ export function Home() {
 
       {/* ───────── Versatile Development Expertise: Magic UI "Orbiting Circles" ───────── */}
       <section className="section">
-        <div className="wrap grid items-center gap-14 lg:grid-cols-2">
+        <div className="wrap grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
           <div>
-            <h2 className="text-4xl font-extrabold md:text-6xl">Versatile Development Expertise</h2>
+            <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">Versatile Development Expertise</h2>
             <p className="mt-6 max-w-[44ch] text-lg text-mist">Explore our proficiency in platform development, custom solutions, and mastery across various programming languages.</p>
-            <ul className="mt-10 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+            <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-2.5 lg:mt-10 lg:gap-x-6 lg:gap-y-3">
               {platforms.map((p) => (
-                <li key={p.name} className="flex items-center gap-3 border-b border-line pb-3 text-[15px]">
+                <li key={p.name} className="flex items-center gap-2.5 border-b border-line pb-2.5 text-[13px] leading-snug sm:text-[15px] lg:gap-3 lg:pb-3">
                   <span className="size-2.5 shrink-0 rounded-full" style={{ background: p.color }} />{p.label}
                 </li>
               ))}
             </ul>
           </div>
-          <PlatformOrbit items={platforms} />
+          <div className="mx-auto w-full max-w-[340px] lg:max-w-none"><PlatformOrbit items={platforms} /></div>
         </div>
       </section>
 
       {/* ───────── Pricing: Skiper sticky stack + Magic Card spotlight, Border Beam on Gold ───────── */}
       <section id="pricing" className="section pt-0">
         <div className="wrap">
-          <div className="mb-14 max-w-3xl">
+          <div className="mb-8 max-w-3xl lg:mb-14">
             <p className="mb-4 inline-block rounded-full bg-butter px-3 py-1 font-display text-xs font-bold text-ink">Our pricing</p>
-            <h2 className="text-4xl font-extrabold md:text-6xl">Features You Need, Budget You Love</h2>
+            <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">Features You Need, Budget You Love</h2>
             <p className="mt-5 text-lg text-mist">Compare Packages &amp; Build Your Ideal Website.</p>
           </div>
-          <StickyStack stickyClassName="lg:sticky" className="gap-6 lg:gap-14" scaleStep={0.04}>{plans.map((p, i) => <PlanCard key={p.name} plan={p} index={i} />)}</StickyStack>
+          {/* desktop: Skiper sticky stack; phones/tablets: swipe through the plans */}
+          <StickyStack stickyClassName="lg:sticky" className="hidden gap-14 lg:grid" scaleStep={0.04}>{plans.map((p, i) => <PlanCard key={p.name} plan={p} index={i} />)}</StickyStack>
+          <SwipeRow label="Pricing plans" className="lg:hidden" itemClassName="sm:w-[70%]">{plans.map((p, i) => <PlanCard key={p.name} plan={p} index={i} compact />)}</SwipeRow>
         </div>
       </section>
     </>
@@ -143,19 +150,23 @@ export function Home() {
 
 const PLAN_COLORS = ['var(--color-bone)', 'var(--color-butter)', 'var(--color-lilac)', 'var(--color-tang)']
 
-function PlanCard({ plan, index }: { plan: Plan; index: number }) {
+function PlanCard({ plan, index, compact }: { plan: Plan; index: number; compact?: boolean }) {
   const featured = index === 1
+  // compact (phones/tablets): first features shown, the rest one tap away
+  const [all, setAll] = useState(false)
+  const SHOWN = 3
+  const features = compact && !all ? plan.features.slice(0, SHOWN) : plan.features
   return (
-    <article className="relative overflow-hidden rounded-[28px] shadow-[0_-20px_60px_-20px_rgba(0,0,0,.6)]">
+    <article className={cn('relative overflow-hidden rounded-[28px]', compact ? 'h-full' : 'shadow-[0_-20px_60px_-20px_rgba(0,0,0,.6)]')}>
       <MagicCard
-        className="rounded-[28px] [--background:var(--color-ink-2)] [--color-background:var(--color-ink-2)]"
+        className={cn('rounded-[28px] [--background:var(--color-ink-2)] [--color-background:var(--color-ink-2)]', compact && 'h-full')}
         gradientSize={320}
         gradientColor="color-mix(in oklab, var(--color-lilac) 14%, transparent)"
         gradientOpacity={1}
         gradientFrom={featured ? 'var(--color-tang)' : PLAN_COLORS[index]}
         gradientTo="var(--color-lilac)"
       >
-        <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[0.9fr_1.4fr]">
+        <div className={cn('grid gap-8 p-6 md:p-10', !compact && 'lg:grid-cols-[0.9fr_1.4fr]', compact && 'gap-6')}>
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
               <span className="size-4 rounded-full" style={{ background: PLAN_COLORS[index] }} />
@@ -163,7 +174,7 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
             </div>
             <p className="mt-6 text-sm text-mist">{plan.forLabel}</p>
             <p className="mt-1 max-w-[34ch] text-lg">{plan.forText}</p>
-            <p className="mt-8 font-display text-6xl font-black tracking-tight md:text-7xl" style={{ color: PLAN_COLORS[index] }}>
+            <p className={cn('font-display font-black tracking-tight', compact ? 'mt-5 text-5xl' : 'mt-8 text-6xl md:text-7xl')} style={{ color: PLAN_COLORS[index] }}>
               <span className="align-top text-3xl">$</span>{plan.price}
             </p>
             <div className="mt-8 flex flex-wrap gap-3 lg:mt-auto lg:pt-8">
@@ -172,19 +183,28 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
             </div>
           </div>
           <div className="min-w-0">
-            <p className="text-sm text-mist">Included services</p>
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {plan.services.map((s) => <li key={s} className="rounded-full border border-line px-3 py-1 text-sm">{s}</li>)}
-            </ul>
-            <p className="mt-8 text-sm text-mist">Features</p>
-            <ul className="mt-3 grid gap-3 md:grid-cols-2">
-              {plan.features.map((f) => (
+            {(!compact || all) && (
+              <>
+                <p className="text-sm text-mist">Included services</p>
+                <ul className="mt-3 mb-8 flex flex-wrap gap-2">
+                  {plan.services.map((s) => <li key={s} className="rounded-full border border-line px-3 py-1 text-sm">{s}</li>)}
+                </ul>
+              </>
+            )}
+            <p className="text-sm text-mist">Features</p>
+            <ul className={cn('mt-3 grid gap-3', !compact && 'md:grid-cols-2')}>
+              {features.map((f) => (
                 <li key={f.text} className={cn('text-[15px] leading-relaxed text-mist', !f.title && 'font-semibold text-bone md:col-span-2')}>
                   {f.title && <span className="block font-semibold text-bone">{f.title}</span>}
                   {f.text}
                 </li>
               ))}
             </ul>
+            {compact && (
+              <button type="button" onClick={() => setAll(!all)} aria-expanded={all} aria-label={all ? 'Show fewer details' : 'Show all included services and features'} className="mt-4 rounded-full border border-line px-4 py-2 text-sm font-semibold text-bone hover:border-mist">
+                {all ? '−' : `+${plan.features.length - SHOWN + plan.services.length} more`}
+              </button>
+            )}
           </div>
         </div>
       </MagicCard>

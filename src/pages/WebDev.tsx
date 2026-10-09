@@ -23,7 +23,7 @@ export function WebDev() {
       <section className="section">
         <div className="wrap mb-10">
           <p className="mb-3 text-mist">Testimonials</p>
-          <h2 className="text-4xl font-extrabold md:text-6xl">Trusted by brands.</h2>
+          <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">Trusted by brands.</h2>
         </div>
         <div className="[mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
           <Marquee pauseOnHover repeat={2} className="[--duration:70s] [--gap:1.25rem]">{testimonials.map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>

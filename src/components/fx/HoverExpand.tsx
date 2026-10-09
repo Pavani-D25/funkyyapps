@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils'
 const SWATCH = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)']
 // same colours as hex, so Motion can tween the mobile bars between them
 const SWATCH_HEX = ['#ff6b2c', '#c9b6ff', '#ffd84d']
-const INK_2 = '#162a29'
 
 export function HoverExpand({ items }: { items: { name: string; items: string[] }[] }) {
   const [active, setActive] = useState(0)
@@ -41,77 +40,80 @@ export function HoverExpand({ items }: { items: { name: string; items: string[] 
           )
         })}
       </div>
-      {/* mobile / tablet: the same idea turned sideways — tap a bar and it springs open in its colour */}
-      <MobileBars items={items} />
+      {/* mobile / tablet: every industry as a chip, one colour panel for the chosen one (swipe to move on) */}
+      <MobilePicker items={items} />
     </>
   )
 }
 
-function MobileBars({ items }: { items: { name: string; items: string[] }[] }) {
-  const [open, setOpen] = useState<number | null>(0)
+function MobilePicker({ items }: { items: { name: string; items: string[] }[] }) {
+  const [active, setActive] = useState(0)
+  const [dir, setDir] = useState(1)
   const reduce = useReducedMotion()
-  const spring = reduce ? { duration: 0 } : { type: 'spring' as const, stiffness: 260, damping: 30 }
+  const go = (i: number) => { const n = (i + items.length) % items.length; setDir(n > active ? 1 : -1); setActive(n) }
+  const it = items[active]
+  const most = Math.max(...items.map((x) => x.items.length))
   return (
-    <div className="grid gap-2 lg:hidden">
-      {items.map((it, i) => {
-        const on = open === i
-        const id = `industry-${i}`
-        return (
-          <motion.div
-            key={it.name}
-            className={cn('overflow-hidden rounded-[22px] border', on ? 'border-transparent text-ink' : 'border-line text-bone')}
-            initial={false}
-            animate={{ backgroundColor: on ? SWATCH_HEX[i % 3] : INK_2 }}
-            transition={reduce ? { duration: 0 } : { duration: 0.3 }}
-          >
+    <div className="lg:hidden">
+      <div role="tablist" aria-label="Industries" className="flex flex-wrap gap-2">
+        {items.map((x, i) => {
+          const on = active === i
+          return (
             <button
+              key={x.name}
               type="button"
-              aria-expanded={on}
-              aria-controls={id}
-              onClick={() => setOpen(on ? null : i)}
-              className="flex w-full items-center gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
+              role="tab"
+              id={`industry-tab-${i}`}
+              aria-selected={on}
+              aria-controls="industry-panel"
+              onClick={() => go(i)}
+              className={cn('rounded-full border px-3.5 py-2 text-sm font-semibold transition-colors', on ? 'border-transparent text-ink' : 'border-line text-mist hover:text-bone')}
+              style={on ? { background: SWATCH[i % 3] } : undefined}
             >
-              <span className={cn('font-display text-sm font-bold tabular-nums', on && 'text-ink/60')} style={on ? undefined : { color: SWATCH[i % 3] }}>{String(i + 1).padStart(2, '0')}</span>
-              <span className={cn('flex-1 font-display font-extrabold leading-tight transition-[font-size] duration-300', on ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl')}>{it.name}</span>
-              <motion.span
-                aria-hidden
-                animate={{ rotate: on ? 45 : 0 }}
-                transition={spring}
-                className={cn('grid size-9 shrink-0 place-items-center rounded-full border text-xl leading-none', on ? 'border-ink/30' : 'border-line')}
-              >
-                +
-              </motion.span>
+              {x.name}
             </button>
-            <AnimatePresence initial={false}>
-              {on && (
-                <motion.div
-                  id={id}
-                  key="list"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={spring}
-                >
-                  <ul className="grid gap-2 px-5 pb-6 text-[15px] font-medium sm:grid-cols-2 sm:px-6">
-                    {it.items.map((s, k) => (
-                      <motion.li
-                        key={s}
-                        initial={reduce ? false : { opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: reduce ? 0 : 0.05 + k * 0.04 }}
-                        className="flex items-center gap-2"
-                      >
-                        <span className="size-1.5 shrink-0 rounded-full bg-ink" />
-                        {s}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )
-      })}
+          )
+        })}
+      </div>
+      <motion.div
+        id="industry-panel"
+        role="tabpanel"
+        aria-labelledby={`industry-tab-${active}`}
+        className="relative mt-4 touch-pan-y overflow-hidden rounded-[22px] p-5 text-ink sm:p-6"
+        initial={false}
+        animate={{ backgroundColor: SWATCH_HEX[active % 3] }}
+        transition={reduce ? { duration: 0 } : { duration: 0.3 }}
+        drag={reduce ? false : 'x'}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.18}
+        onDragEnd={(_, info) => { if (info.offset.x < -50) go(active + 1); else if (info.offset.x > 50) go(active - 1) }}
+      >
+        <div className="flex items-center justify-between">
+          <span className="font-display text-sm font-bold text-ink/60 tabular-nums">{String(active + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
+          <span className="flex gap-1.5">
+            <button type="button" onClick={() => go(active - 1)} aria-label="Previous industry" className="grid size-9 place-items-center rounded-full border border-ink/25 text-lg leading-none">‹</button>
+            <button type="button" onClick={() => go(active + 1)} aria-label="Next industry" className="grid size-9 place-items-center rounded-full border border-ink/25 text-lg leading-none">›</button>
+          </span>
+        </div>
+        {/* fixed height for the longest list, so switching never makes the page jump */}
+        <div className="relative mt-3" style={{ minHeight: `calc(2.4rem + ${most} * 1.9rem)` }}>
+          <AnimatePresence mode="popLayout" initial={false} custom={dir}>
+            <motion.div
+              key={active}
+              custom={dir}
+              initial={reduce ? false : { opacity: 0, x: dir * 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reduce ? undefined : { opacity: 0, x: dir * -40 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+            >
+              <p className="font-display text-2xl leading-tight font-extrabold sm:text-3xl">{it.name}</p>
+              <ul className="mt-3 grid gap-1.5 text-[15px] font-medium sm:grid-cols-2">
+                {it.items.map((x) => <li key={x} className="flex items-center gap-2"><span className="size-1.5 shrink-0 rounded-full bg-ink" />{x}</li>)}
+              </ul>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </motion.div>
     </div>
   )
 }

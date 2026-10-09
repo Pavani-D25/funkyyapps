@@ -1,6 +1,7 @@
 import { PageHero } from '@/components/sections/PageHero'
 import { StatsRow } from '@/components/sections/StatsRow'
 import { TiltCard } from '@/components/sections/TiltCard'
+import { SwipeRow } from '@/components/sections/SwipeRow'
 import { Marquee } from '@/components/ui/marquee'
 import { about } from '@/data/pages'
 
@@ -30,15 +31,15 @@ export function About() {
       </section>
 
       <section className="section pt-0">
-        <div className="wrap grid gap-5 md:grid-cols-2">
+        <SwipeRow label="What we do" desktopClassName="lg:grid-cols-2" className="wrap">
           {about.blocks.map((b, i) => (
-            <TiltCard key={b.title} className="rounded-[28px] border border-line bg-ink-2 p-7 md:p-10">
+            <TiltCard key={b.title} className="h-full rounded-[28px] border border-line bg-ink-2 p-7 md:p-10">
               <span className="mb-8 block h-1.5 w-14 rounded-full" style={{ background: TINT[i] }} />
               <h3 className="text-2xl font-bold md:text-3xl">{b.title}</h3>
               <p className="mt-5 text-mist">{b.text}</p>
             </TiltCard>
           ))}
-        </div>
+        </SwipeRow>
       </section>
     </>
   )
