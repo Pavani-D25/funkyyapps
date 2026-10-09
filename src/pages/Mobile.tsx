@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { PageHero } from '../components/sections/PageHero'
-import { AnimatedTabs } from '../components/fx/AnimatedTabs'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { mobile } from '../data/services'
-import { cn } from '../lib/cn'
+import { PageHero } from '@/components/sections/PageHero'
+import { Tabs, panelProps } from '@/components/sections/Tabs'
+import { Cta } from '@/components/Cta'
+import { mobile } from '@/data/services'
+import { cn } from '@/lib/utils'
 
 const TINT = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)', 'var(--color-bone)']
 
@@ -32,8 +32,8 @@ export function Mobile() {
       <section className="section">
         <div className="wrap">
           <h2 className="text-4xl font-extrabold md:text-6xl">Why Choose FunkyyApps ?</h2>
-          <AnimatedTabs className="mt-10" tabs={mobile.why.map((x) => x.label)} active={why} onChange={setWhy} />
-          <div className="mt-6 overflow-hidden rounded-[28px] border border-line bg-ink-2">
+          <Tabs group="mobile-why" className="mt-10 flex" tabs={mobile.why.map((x) => x.label)} active={why} onChange={setWhy} />
+          <div {...panelProps('mobile-why', why)} className="mt-6 overflow-hidden rounded-[28px] border border-line bg-ink-2">
             <AnimatePresence mode="wait">
               <motion.div key={why} initial={{ y: 12 }} animate={{ y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="grid gap-8 p-7 md:p-12 lg:grid-cols-[0.8fr_1.4fr] lg:items-center">
                 <p className="font-display text-[clamp(3.5rem,9vw,7.5rem)] leading-none font-black" style={{ color: TINT[why] }}>{w.stat}</p>
@@ -74,7 +74,7 @@ export function Mobile() {
       <section className="section pt-0">
         <div className="wrap">
           <h2 className="text-4xl font-extrabold md:text-6xl">Our Mobile Application Development Tools and Frameworks</h2>
-          <AnimatedTabs className="mt-10" tabs={mobile.stack.map((x) => x.label)} active={stack} onChange={setStack} />
+          <Tabs group="mobile-stack" className="mt-10 flex" tabs={mobile.stack.map((x) => x.label)} active={stack} onChange={setStack} />
           <AnimatePresence mode="wait">
             <motion.ul key={stack} initial={{ y: 10 }} animate={{ y: 0 }} exit={{ opacity: 0 }} className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {mobile.stack[stack].items.map((s, i) => (
@@ -98,7 +98,7 @@ export function Mobile() {
               </li>
             ))}
           </ol>
-          <div className="mt-10"><ShimmerButton to="/consult">Consult an Expert</ShimmerButton></div>
+          <div className="mt-10"><Cta to="/consult">Consult an Expert</Cta></div>
         </div>
       </section>
 
@@ -106,7 +106,7 @@ export function Mobile() {
         <div className="wrap">
           <div className="relative overflow-hidden rounded-[32px] bg-tang p-8 text-ink md:p-16">
             <p className="max-w-[20ch] font-display text-3xl leading-tight font-black md:text-5xl">{mobile.closer}</p>
-            <div className="mt-8"><ShimmerButton to="/consult" variant="bone" className="bg-ink text-bone">Consult an Expert</ShimmerButton></div>
+            <div className="mt-8"><Cta to="/consult" tone="ink">Consult an Expert</Cta></div>
           </div>
         </div>
       </section>

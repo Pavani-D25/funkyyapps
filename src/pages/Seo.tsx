@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { TabServicePage } from './TabServicePage'
-import { AnimatedTabs } from '../components/fx/AnimatedTabs'
-import { TiltCard } from '../components/fx/TiltCard'
-import { seo, seoGuide as g } from '../data/services'
+import { Tabs, panelProps } from '@/components/sections/Tabs'
+import { TiltCard } from '@/components/sections/TiltCard'
+import { seo, seoGuide as g } from '@/data/services'
 
 const TINT = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)']
 
@@ -66,8 +66,8 @@ export function Seo() {
         <div className="wrap">
           <h2 className="text-4xl font-extrabold md:text-6xl">{g.types.title}</h2>
           <p className="mt-5 max-w-[60ch] text-lg text-mist">Optimizing your site generally involves three key focus areas: <strong className="text-bone">On-page</strong>, <strong className="text-bone">off-page</strong>, and technical <strong className="text-bone">SEO</strong>.</p>
-          <AnimatedTabs className="mt-10" tabs={g.types.items.map((x) => x.title)} active={type} onChange={setType} />
-          <div className="mt-6 grid gap-10 rounded-[28px] border border-line bg-ink-2 p-7 md:p-10 lg:grid-cols-[1fr_1.3fr]">
+          <Tabs group="seo-types" className="mt-10 flex" tabs={g.types.items.map((x) => x.title)} active={type} onChange={setType} />
+          <div {...panelProps('seo-types', type)} className="mt-6 grid gap-10 rounded-[28px] border border-line bg-ink-2 p-7 md:p-10 lg:grid-cols-[1fr_1.3fr]">
             <div>
               <h3 className="text-3xl font-extrabold">{ty.title}</h3>
               <p className="mt-4 text-mist">{ty.text}</p>

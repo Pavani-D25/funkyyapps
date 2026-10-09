@@ -1,4 +1,5 @@
 import { type ComponentPropsWithoutRef } from "react"
+import { useReducedMotion } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
@@ -42,6 +43,15 @@ export function Marquee({
   repeat = 4,
   ...props
 }: MarqueeProps) {
+  // FUNKYY: with reduced motion, show one static copy that wraps instead of an endless scroll.
+  const reduceMotion = useReducedMotion()
+  if (reduceMotion) {
+    return (
+      <div {...props} className={cn("flex flex-wrap justify-center gap-(--gap) p-2 [--gap:1rem]", vertical && "flex-col", className)}>
+        {children}
+      </div>
+    )
+  }
   return (
     <div
       {...props}
@@ -59,6 +69,7 @@ export function Marquee({
         .map((_, i) => (
           <div
             key={i}
+            aria-hidden={i > 0 || undefined}
             className={cn("flex shrink-0 justify-around gap-(--gap)", {
               "animate-marquee flex-row": !vertical,
               "animate-marquee-vertical flex-col": vertical,

@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
-import { contact, packages, paypal, questionnaireLinks, quickLinks, servicesNav } from '../../data/site'
-import { CopyChip } from '../sections/CopyChip'
-import { Marquee } from '../fx/Marquee'
+import { contact, packages, paypal, questionnaireLinks, quickLinks, servicesNav } from '@/data/site'
+import { CopyChip } from '@/components/sections/CopyChip'
+import { Marquee } from '@/components/ui/marquee'
 
 export function Footer() {
   return (
     <footer className="relative mt-10 overflow-hidden border-t border-line bg-ink-2">
       {/* packages ticker (the old site's PayPal packages) */}
       <div className="border-b border-line py-5">
-        <Marquee duration={36}>
+        <Marquee pauseOnHover repeat={3} className="p-0 [--duration:36s] [--gap:1.25rem]">
           {packages.map((p) => {
             const link = paypal[p.name]
             return (

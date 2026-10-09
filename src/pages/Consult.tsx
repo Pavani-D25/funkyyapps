@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { PageHero } from '../components/sections/PageHero'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { CopyChip } from '../components/sections/CopyChip'
-import { FormNotice } from '../components/sections/FormNotice'
-import { sendForm, type SendResult } from '../lib/forms'
-import { contact } from '../data/site'
+import { PageHero } from '@/components/sections/PageHero'
+import { Cta } from '@/components/Cta'
+import { CopyChip } from '@/components/sections/CopyChip'
+import { FormNotice } from '@/components/sections/FormNotice'
+import { sendForm, type SendResult } from '@/lib/forms'
+import { contact } from '@/data/site'
 
 export function Consult() {
   const [state, setState] = useState<SendResult | null>(null)
@@ -21,7 +21,7 @@ export function Consult() {
           <label className="grid gap-1.5 text-sm text-mist sm:col-span-2">Phone *<input id="c-phone" name="phone" type="tel" required className="field" autoComplete="tel" /></label>
           <label className="grid gap-1.5 text-sm text-mist sm:col-span-2">Requirement *<textarea id="c-req" name="requirement" required rows={5} className="field resize-y" /></label>
           <p className="rounded-2xl bg-butter px-4 py-3 text-[15px] font-semibold text-ink sm:col-span-2">Virtual consultation for 30 minutes requires $250</p>
-          <div className="grid gap-3 sm:col-span-2"><FormNotice state={state} /><ShimmerButton type="submit" className="justify-self-start">Get in touch</ShimmerButton></div>
+          <div className="grid gap-3 sm:col-span-2"><FormNotice state={state} /><Cta type="submit" className="justify-self-start">Get in touch</Cta></div>
         </form>
         <aside className="grid content-start gap-3">
           <CopyChip label="WhatsApp" value={contact.whatsapp} href={contact.whatsappUrl} />

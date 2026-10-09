@@ -15,6 +15,8 @@ export interface MotionAccordionProps {
   /** @default 10 */
   gap?: number;
   className?: string;
+  /** FUNKYY: index of the item open on first render (null = all closed) */
+  defaultOpen?: number | null;
 }
 
 function AccordionItem({
@@ -46,8 +48,8 @@ function AccordionItem({
     <motion.div
       layout
       className={cn(
-        "overflow-hidden rounded-[30px] bg-surface text-foreground shadow-xs",
-        isOpen && " ",
+        "overflow-hidden rounded-[30px] border border-border bg-surface text-foreground shadow-xs transition-colors",
+        isOpen && "border-tang/60",
       )}
       transition={{ type: "spring", stiffness: 280, damping: 28, mass: 0.9 }}
       animate={{ scale: isOpen ? 1 : 0.985 }}
@@ -60,9 +62,9 @@ function AccordionItem({
         aria-controls={panelId}
         aria-expanded={isOpen}
         onClick={onToggle}
-        className="flex w-full cursor-pointer select-none items-center justify-between gap-4 px-7 py-5 text-left"
+        className="flex w-full cursor-pointer select-none items-center justify-between gap-4 rounded-[30px] px-5 py-4 text-left md:px-7 md:py-5"
       >
-        <span className="text-[clamp(1.2rem,1.6vw,1.3rem)] font-medium tracking-tight leading-snug">
+        <span className="font-display text-[clamp(1.02rem,1.6vw,1.25rem)] font-semibold tracking-tight leading-snug">
           {item.question}
         </span>
 
@@ -74,7 +76,7 @@ function AccordionItem({
             scale: isOpen ? 1.05 : 1,
           }}
           transition={{ type: "spring", stiffness: 480, damping: 28 }}
-          className="inline-flex size-12 shrink-0 items-center justify-center text-foreground"
+          className={cn("inline-flex size-10 shrink-0 items-center justify-center rounded-full border transition-colors md:size-12", isOpen ? "border-tang bg-tang text-ink" : "border-border text-foreground")}
         >
           {isOpen ? (
             <svg
@@ -134,11 +136,11 @@ function AccordionItem({
             damping: 30,
             mass: 0.8,
           }}
-          className="px-7 pb-7"
+          className="px-5 pb-6 md:px-7 md:pb-7"
         >
-          <p className="text-lg leading-8 font-base tracking-normal text-foreground/75">
+          <div className="max-w-[68ch] text-[17px] leading-relaxed tracking-normal text-muted-foreground">
             {item.answer}
-          </p>
+          </div>
         </motion.div>
       </motion.div>
     </motion.div>
@@ -149,17 +151,18 @@ export function MotionAccordion({
   items,
   gap = 10,
   className,
+  defaultOpen = null,
 }: MotionAccordionProps) {
   const rawId = React.useId();
   const baseId = `accordion-${rawId.replace(/:/g, "")}`;
 
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+  const [openIndex, setOpenIndex] = React.useState<number | null>(defaultOpen);
 
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex flex-col rounded-[34px] p-3 " style={{ gap }}>
+      <div className="flex flex-col" style={{ gap }}>
         {items.map((item, i) => (
           <AccordionItem
             key={i}

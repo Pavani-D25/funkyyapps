@@ -1,10 +1,10 @@
 // The "get a quote" form that closes every page, same fields as the live site.
 import { useState } from 'react'
 import { Paperclip } from 'lucide-react'
-import { sendForm, type SendResult } from '../../lib/forms'
-import { ShimmerButton } from '../fx/ShimmerButton'
-import { FormNotice } from './FormNotice'
-import { promises } from '../../data/site'
+import { sendForm, type SendResult } from '@/lib/forms'
+import { Cta } from '@/components/Cta'
+import { FormNotice } from '@/components/sections/FormNotice'
+import { promises } from '@/data/site'
 
 export function QuoteForm() {
   const [state, setState] = useState<SendResult | 'invalid-email' | null>(null)
@@ -56,7 +56,7 @@ export function QuoteForm() {
           </label>
           <div className="grid gap-3 sm:col-span-2">
             <FormNotice state={state} />
-            <ShimmerButton type="submit" className="justify-self-start">Submit</ShimmerButton>
+            <Cta type="submit" className="justify-self-start">Submit</Cta>
           </div>
         </form>
       </div>

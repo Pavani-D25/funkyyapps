@@ -1,8 +1,8 @@
-import { PageHero } from '../components/sections/PageHero'
-import { StatsRow } from '../components/sections/StatsRow'
-import { TiltCard } from '../components/fx/TiltCard'
-import { Marquee } from '../components/fx/Marquee'
-import { about } from '../data/pages'
+import { PageHero } from '@/components/sections/PageHero'
+import { StatsRow } from '@/components/sections/StatsRow'
+import { TiltCard } from '@/components/sections/TiltCard'
+import { Marquee } from '@/components/ui/marquee'
+import { about } from '@/data/pages'
 
 const TINT = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)', 'var(--color-bone)']
 
@@ -14,7 +14,7 @@ export function About() {
       </PageHero>
 
       <div className="border-y border-line bg-ink-2 py-5">
-        <Marquee duration={30} gap="3rem" pauseOnHover={false}>
+        <Marquee className="p-0 [--duration:30s] [--gap:3rem]">
           {about.ribbon.map((r, i) => <span key={r} className="flex items-center gap-12 font-display text-xl font-bold whitespace-nowrap md:text-2xl">{r}<span className="size-2.5 rounded-full" style={{ background: TINT[i] }} /></span>)}
         </Marquee>
       </div>

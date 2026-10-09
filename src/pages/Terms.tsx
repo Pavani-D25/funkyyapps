@@ -1,6 +1,6 @@
-import { PageHero } from '../components/sections/PageHero'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { terms } from '../data/pages'
+import { PageHero } from '@/components/sections/PageHero'
+import { Cta } from '@/components/Cta'
+import { terms } from '@/data/pages'
 
 export function Terms() {
   return (
@@ -19,7 +19,7 @@ export function Terms() {
         </div>
         <aside className="grid content-start gap-4">
           {terms.notes.map((n) => <p key={n} className="rounded-[22px] border border-line bg-ink-2 p-6 text-[15px] text-mist"><span className="text-tang">* </span>{n}</p>)}
-          <ShimmerButton href="#quote" className="justify-self-start">Get A Quote</ShimmerButton>
+          <Cta href="#quote" className="justify-self-start">Get A Quote</Cta>
         </aside>
       </section>
     </>

@@ -1,32 +1,11 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import ReactLenis from "lenis/react";
-import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { Children, useRef, type ReactNode } from "react";
 
-const projects = [
-  {
-    title: "Project 1",
-    src: "/images/lummi/img8.png",
-  },
-  {
-    title: "Project 2",
-    src: "/images/lummi/img14.png",
-  },
-  {
-    title: "Project 3",
-    src: "/images/lummi/img10.png",
-  },
-  {
-    title: "Project 4",
-    src: "/images/lummi/img15.png",
-  },
-  {
-    title: "Project 5",
-    src: "/images/lummi/img12.png",
-  },
-];
+import { cn } from "@/lib/utils";
 
+// ── Skiper UI original (unchanged): sticky image card that scales back as the stack scrolls ──
 const StickyCard_001 = ({
   i,
   title,
@@ -38,7 +17,7 @@ const StickyCard_001 = ({
   i: number;
   title: string;
   src: string;
-  progress: any;
+  progress: MotionValue<number>;
   range: [number, number];
   targetScale: number;
 }) => {
@@ -64,46 +43,82 @@ const StickyCard_001 = ({
   );
 };
 
-const Skiper16 = () => {
+
+// ── FUNKYY adaptation: the same sticky + scale-back mechanic (useScroll over the stack, each card
+// scales from 1 to its target over [i / n, 1]) for any card content instead of a fixed image. ──
+function StickyStackItem({
+  i,
+  progress,
+  range,
+  targetScale,
+  top,
+  stickyClassName,
+  children,
+}: {
+  i: number;
+  progress: MotionValue<number>;
+  range: [number, number];
+  targetScale: number;
+  top: number;
+  stickyClassName: string;
+  children: ReactNode;
+}) {
+  const reduce = useReducedMotion();
+  const scale = useTransform(progress, range, [1, reduce ? 1 : targetScale]);
+  return (
+    <div className={stickyClassName} style={{ top, zIndex: i + 1 }}>
+      <motion.div style={{ scale }} className="origin-top">
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+export function StickyStack({
+  children,
+  top = 110,
+  step = 22,
+  scaleStep = 0.05,
+  stickyClassName = "sticky",
+  className,
+}: {
+  children: ReactNode;
+  /** px from the viewport top where the first card pins */
+  top?: number;
+  /** extra px each following card pins lower, so the edges peek out */
+  step?: number;
+  /** how much each buried card shrinks per card above it */
+  scaleStep?: number;
+  /** e.g. "lg:sticky" to stack only on large screens */
+  stickyClassName?: string;
+  className?: string;
+}) {
   const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
   });
-
+  const items = Children.toArray(children);
   return (
-    <ReactLenis root>
-      <main
-        ref={container}
-        className="relative flex w-full flex-col items-center justify-center pb-[100vh] pt-[50vh]"
-      >
-        <div className="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-6 text-center">
-          <span className="after:from-background after:to-foreground relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:content-['']">
-            scroll down to see card stack
-          </span>
-        </div>
-        {projects.map((project, i) => {
-          const targetScale = Math.max(
-            0.5,
-            1 - (projects.length - i - 1) * 0.1,
-          );
-          return (
-            <StickyCard_001
-              key={`p_${i}`}
-              i={i}
-              {...project}
-              progress={scrollYProgress}
-              range={[i * 0.25, 1]}
-              targetScale={targetScale}
-            />
-          );
-        })}
-      </main>
-    </ReactLenis>
+    <div ref={container} className={cn("relative grid", className)}>
+      {items.map((child, i) => (
+        <StickyStackItem
+          key={i}
+          i={i}
+          progress={scrollYProgress}
+          range={[i / items.length, 1]}
+          targetScale={Math.max(0.5, 1 - (items.length - i - 1) * scaleStep)}
+          top={top + i * step}
+          stickyClassName={stickyClassName}
+        >
+          {child}
+        </StickyStackItem>
+      ))}
+    </div>
   );
-};
+}
 
-export { Skiper16, StickyCard_001 };
+export { StickyCard_001 };
 
 /**
  * Skiper 16 StickyCard_001 — React + Framer Motion

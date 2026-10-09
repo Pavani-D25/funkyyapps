@@ -1,17 +1,19 @@
 import { ArrowDownRight, MessageCircle, Phone } from 'lucide-react'
-import { PixelLiquid } from '../components/fx/PixelLiquid'
-import { StickerTrail } from '../components/fx/StickerTrail'
-import { MorphText } from '../components/fx/MorphText'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { Marquee } from '../components/fx/Marquee'
-import { HoverExpand } from '../components/fx/HoverExpand'
-import { OrbitalWheel } from '../components/fx/OrbitalWheel'
-import { StackedCards } from '../components/fx/StackedCards'
-import { BorderBeam } from '../components/fx/BorderBeam'
-import { ScrollReveal } from '../components/fx/ScrollReveal'
-import { TestimonialCard } from '../components/sections/TestimonialCard'
-import { capabilities, contact, hero, industries, plans, platforms, servicesNav, testimonials, type Plan } from '../data/site'
-import { cn } from '../lib/cn'
+import { StickerTrail } from '@/components/fx/StickerTrail'
+import { HeroFluid } from '@/components/sections/HeroFluid'
+import { PlatformOrbit } from '@/components/sections/PlatformOrbit'
+import { TestimonialCard } from '@/components/sections/TestimonialCard'
+import { Cta } from '@/components/Cta'
+import { MorphText } from '@/components/ui/morph-text'
+import { Marquee } from '@/components/ui/marquee'
+import { BorderBeam } from '@/components/ui/border-beam'
+import { TextReveal } from '@/components/ui/text-reveal'
+import { HoverExpand } from '@/components/unlumen-ui/hover-expand'
+import { StickyStack } from '@/components/ui/skiper-ui/skiper16'
+import { capabilities, contact, hero, industries, plans, platforms, servicesNav, testimonials, type Plan } from '@/data/site'
+import { cn } from '@/lib/utils'
+
+const SWATCH = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)']
 
 export function Home() {
   const half = Math.ceil(testimonials.length / 2)
@@ -19,11 +21,11 @@ export function Home() {
     <>
       {/* ───────── Hero: the one loud moment ───────── */}
       <StickerTrail className="relative isolate overflow-hidden">
-        <PixelLiquid className="absolute inset-0 -z-10 h-full w-full" />
+        <HeroFluid />
         <div className="wrap pt-36 pb-16 md:pt-44 md:pb-24">
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-mist md:text-base">
             <span className="size-2 rounded-full bg-tang" />
-            One-stop for <MorphText words={servicesNav.map((s) => s.label)} className="font-semibold text-bone" />
+            One-stop for <MorphText align="start" words={servicesNav.map((s) => s.label)} interval={2400} fontSize="1em" className="font-semibold text-bone" />
           </p>
           <h1 className="mt-6 font-black leading-[0.9] tracking-[-0.045em]">
             <span className="block text-[clamp(2.5rem,9.2vw,9.5rem)]">{hero.lines[0]}</span>
@@ -33,8 +35,8 @@ export function Home() {
             <div>
               <p className="max-w-[30ch] font-display text-xl font-semibold leading-snug md:text-2xl">{hero.tagline}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <ShimmerButton href="#quote">Get a quote <ArrowDownRight size={18} /></ShimmerButton>
-                <ShimmerButton href={contact.whatsappUrl} variant="ghost"><MessageCircle size={18} /> WhatsApp: {contact.whatsapp}</ShimmerButton>
+                <Cta href="#quote">Get a quote <ArrowDownRight size={18} /></Cta>
+                <Cta href={contact.whatsappUrl} variant="ghost"><MessageCircle size={18} /> WhatsApp: {contact.whatsapp}</Cta>
               </div>
             </div>
             <div className="max-w-[46ch] space-y-3 text-mist md:justify-self-end">
@@ -51,19 +53,16 @@ export function Home() {
           <h2 className="max-w-[14ch] text-4xl font-extrabold md:text-6xl">Trusted By <span className="text-butter">100+</span> Brand Owners</h2>
         </div>
         <div className="relative grid gap-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
-          <Marquee duration={55}>{testimonials.slice(0, half).map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>
-          <Marquee duration={60} reverse>{testimonials.slice(half).map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>
+          <Marquee pauseOnHover repeat={2} className="[--duration:55s] [--gap:1.25rem]">{testimonials.slice(0, half).map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>
+          <Marquee pauseOnHover reverse repeat={2} className="[--duration:60s] [--gap:1.25rem]">{testimonials.slice(half).map((t) => <TestimonialCard key={t.name} t={t} />)}</Marquee>
         </div>
       </section>
 
       {/* ───────── Manifesto ───────── */}
       <section className="section pt-0">
-        <div className="wrap">
-          <ScrollReveal
-            text="At FunkyyApps, we help visualize your ideas/goals into reality. With over 7 years of industry excellence, we fuse cutting-edge design with advanced development to deliver bold, future-ready solutions."
-            className="max-w-[24ch] font-display text-[clamp(1.8rem,4.6vw,4rem)] leading-[1.08] font-bold tracking-tight"
-          />
-        </div>
+        <TextReveal className="h-[160vh]" frameClassName="wrap max-w-[1240px]" textClassName="max-w-[24ch] p-0 font-display text-[clamp(1.8rem,4.6vw,4rem)] leading-[1.08] font-bold tracking-tight md:p-0 lg:p-0 dark:text-bone/20">
+          At FunkyyApps, we help visualize your ideas/goals into reality. With over 7 years of industry excellence, we fuse cutting-edge design with advanced development to deliver bold, future-ready solutions.
+        </TextReveal>
       </section>
 
       {/* ───────── Discover Our Excellence ───────── */}
@@ -73,18 +72,30 @@ export function Home() {
             <h2 className="text-4xl font-extrabold md:text-6xl">Discover Our Excellence</h2>
             <p className="max-w-[48ch] text-mist md:justify-self-end">Explore our cutting-edge websites across various industries. Each project exemplifies our commitment to superior quality, innovation, and technical prowess.</p>
           </div>
-          <HoverExpand items={industries} />
+          <HoverExpand
+            collapsedHeight={64}
+            expandedHeight={300}
+            items={industries.map((it, i) => ({
+              label: it.name,
+              accent: SWATCH[i % 3],
+              content: (
+                <ul className="grid max-w-[34rem] gap-1.5 pr-10 text-[15px] font-medium sm:grid-cols-2">
+                  {it.items.map((x) => <li key={x} className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-ink" />{x}</li>)}
+                </ul>
+              ),
+            }))}
+          />
         </div>
       </section>
 
       {/* ───────── Capabilities band ───────── */}
       <section aria-label="Capabilities" className="-rotate-2 border-y border-line bg-tang py-5 text-ink">
-        <Marquee duration={50} gap="2.5rem" pauseOnHover={false}>
+        <Marquee className="p-0 [--duration:50s] [--gap:2.5rem]">
           {capabilities.slice(0, 7).map((c) => <span key={c} className="flex items-center gap-10 font-display text-2xl font-extrabold whitespace-nowrap md:text-4xl">{c}<span className="size-3 rounded-full bg-ink" /></span>)}
         </Marquee>
       </section>
       <section aria-hidden className="rotate-1 border-y border-line bg-lilac py-5 text-ink">
-        <Marquee duration={50} gap="2.5rem" reverse pauseOnHover={false}>
+        <Marquee reverse className="p-0 [--duration:50s] [--gap:2.5rem]">
           {capabilities.slice(7).map((c) => <span key={c} className="flex items-center gap-10 font-display text-2xl font-extrabold whitespace-nowrap md:text-4xl">{c}<span className="size-3 rotate-45 bg-ink" /></span>)}
         </Marquee>
       </section>
@@ -103,7 +114,7 @@ export function Home() {
               ))}
             </ul>
           </div>
-          <OrbitalWheel items={platforms} />
+          <PlatformOrbit items={platforms} />
         </div>
       </section>
 
@@ -115,7 +126,7 @@ export function Home() {
             <h2 className="text-4xl font-extrabold md:text-6xl">Features You Need, Budget You Love</h2>
             <p className="mt-5 text-lg text-mist">Compare Packages &amp; Build Your Ideal Website.</p>
           </div>
-          <StackedCards>{plans.map((p, i) => <PlanCard key={p.name} plan={p} index={i} />)}</StackedCards>
+          <StickyStack stickyClassName="lg:sticky" className="gap-6 lg:gap-14" scaleStep={0.04}>{plans.map((p, i) => <PlanCard key={p.name} plan={p} index={i} />)}</StickyStack>
         </div>
       </section>
     </>
@@ -128,7 +139,7 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
   const featured = index === 1
   return (
     <article className="relative grid gap-8 overflow-hidden rounded-[28px] border border-line bg-ink-2 p-6 shadow-[0_-20px_60px_-20px_rgba(0,0,0,.6)] md:p-10 lg:grid-cols-[0.9fr_1.4fr]">
-      {featured && <BorderBeam size={180} duration={9} />}
+      {featured && <BorderBeam size={180} duration={9} colorFrom="var(--color-tang)" colorTo="var(--color-lilac)" borderWidth={1.5} />}
       <div className="flex flex-col">
         <div className="flex items-center gap-3">
           <span className="size-4 rounded-full" style={{ background: PLAN_COLORS[index] }} />
@@ -140,8 +151,8 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
           <span className="align-top text-3xl">$</span>{plan.price}
         </p>
         <div className="mt-8 flex flex-wrap gap-3 lg:mt-auto lg:pt-8">
-          <ShimmerButton href="#quote" variant={featured ? 'tang' : 'bone'}>Start Now</ShimmerButton>
-          <ShimmerButton href={contact.whatsappUrl} variant="ghost"><Phone size={16} /> Call Now</ShimmerButton>
+          <Cta href="#quote" variant={featured ? 'primary' : 'shiny'}>Start Now</Cta>
+          <Cta href={contact.whatsappUrl} variant="ghost"><Phone size={16} /> Call Now</Cta>
         </div>
       </div>
       <div className="min-w-0">

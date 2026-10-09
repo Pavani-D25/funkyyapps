@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { PageHero } from '../components/sections/PageHero'
-import { StatsRow } from '../components/sections/StatsRow'
-import { AnimatedTabs } from '../components/fx/AnimatedTabs'
-import { Accordion } from '../components/fx/Accordion'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { marketingStats } from '../data/pages'
-import type { TabService } from '../data/services'
+import { PageHero } from '@/components/sections/PageHero'
+import { StatsRow } from '@/components/sections/StatsRow'
+import { Tabs, panelProps } from '@/components/sections/Tabs'
+import { Faq } from '@/components/sections/Faq'
+import { Cta } from '@/components/Cta'
+import { marketingStats } from '@/data/pages'
+import type { TabService } from '@/data/services'
 import type { ReactNode } from 'react'
 
 export function TabServicePage({ data, children }: { data: TabService; children?: ReactNode }) {
@@ -24,10 +24,10 @@ export function TabServicePage({ data, children }: { data: TabService; children?
       <section className="section pt-4">
         <div className="wrap grid gap-10 lg:grid-cols-[320px_1fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <AnimatedTabs tabs={data.tabs.map((x) => x.label)} active={tab} onChange={setTab} vertical className="hidden lg:flex" />
-            <AnimatedTabs tabs={data.tabs.map((x) => x.label)} active={tab} onChange={setTab} className="lg:hidden" />
+            <Tabs group={`${data.slug}-v`} tabs={data.tabs.map((x) => x.label)} active={tab} onChange={setTab} vertical className="hidden w-full lg:flex" />
+            <Tabs group={`${data.slug}-h`} tabs={data.tabs.map((x) => x.label)} active={tab} onChange={setTab} className="flex lg:hidden" />
           </div>
-          <div className="min-w-0 rounded-[28px] border border-line bg-ink-2 p-6 md:p-12">
+          <div {...panelProps(`${data.slug}-v`, tab)} className="min-w-0 rounded-[28px] border border-line bg-ink-2 p-6 md:p-12">
             <AnimatePresence mode="wait">
               <motion.div key={tab} initial={{ x: 16 }} animate={{ x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.25 }}>
                 <p className="font-display text-sm font-bold text-tang tabular-nums">{String(tab + 1).padStart(2, '0')} / {String(data.tabs.length).padStart(2, '0')}</p>
@@ -43,7 +43,7 @@ export function TabServicePage({ data, children }: { data: TabService; children?
                   )}
                   {t.after?.map((p, i) => <p key={i}>{p.text}</p>)}
                 </div>
-                <div className="mt-10"><ShimmerButton href="#quote">Get a quote</ShimmerButton></div>
+                <div className="mt-10"><Cta href="#quote">Get a quote</Cta></div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -56,7 +56,7 @@ export function TabServicePage({ data, children }: { data: TabService; children?
         <section className="section pt-0">
           <div className="wrap grid gap-10 lg:grid-cols-[1fr_2fr]">
             <h2 className="text-4xl font-extrabold md:text-5xl">Frequently Asked Questions</h2>
-            <Accordion items={data.faqs} />
+            <Faq items={data.faqs} />
           </div>
         </section>
       )}

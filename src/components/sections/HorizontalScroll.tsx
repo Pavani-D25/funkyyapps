@@ -1,4 +1,4 @@
-// Inspired by Animmaster "scroll animations": vertical scroll drives a horizontal gallery on desktop.
+// Own code (no library version requested): vertical scroll drives a horizontal gallery on desktop, swipe row on mobile.
 import { motion, useScroll, useTransform } from 'motion/react'
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 

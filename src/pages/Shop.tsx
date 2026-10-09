@@ -1,8 +1,8 @@
-import { PageHero } from '../components/sections/PageHero'
-import { TiltCard } from '../components/fx/TiltCard'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { shop } from '../data/pages'
-import { contact, packages, paypal } from '../data/site'
+import { PageHero } from '@/components/sections/PageHero'
+import { TiltCard } from '@/components/sections/TiltCard'
+import { Cta } from '@/components/Cta'
+import { shop } from '@/data/pages'
+import { contact, packages, paypal } from '@/data/site'
 
 const PKG: Record<string, string> = { web: packages[3].name, android: packages[2].name, ios: packages[1].name, shop: packages[0].name }
 const TINT: Record<string, string> = { web: 'var(--color-lilac)', android: 'var(--color-butter)', ios: 'var(--color-bone)', shop: 'var(--color-tang)' }
@@ -31,7 +31,7 @@ export function Shop() {
           const name = PKG[s.kind]
           const link = paypal[name] || `${contact.whatsappUrl}?text=${encodeURIComponent(`Hi FunkyyApps, I'd like the ${s.title} (${s.price}) package.`)}`
           return (
-            <TiltCard key={s.title} max={5} className="flex flex-col overflow-hidden rounded-[28px] border border-line bg-ink-2">
+            <TiltCard key={s.title} max={4} className="flex flex-col overflow-hidden rounded-[28px] border border-line bg-ink-2">
               <div className="grid aspect-[16/9] place-items-center" style={{ background: TINT[s.kind] }}><Art kind={s.kind} /></div>
               <div className="flex flex-1 flex-col p-7">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -39,7 +39,7 @@ export function Shop() {
                   <p className="font-display text-2xl font-black text-tang">({s.price})</p>
                 </div>
                 <p className="mt-3 text-mist">{s.text}</p>
-                <div className="mt-auto pt-7"><ShimmerButton href={link}>Shop Now</ShimmerButton></div>
+                <div className="mt-auto pt-7"><Cta href={link}>Shop Now</Cta></div>
               </div>
             </TiltCard>
           )

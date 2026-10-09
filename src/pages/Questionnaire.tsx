@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Paperclip } from 'lucide-react'
-import { PageHero } from '../components/sections/PageHero'
-import { ShimmerButton } from '../components/fx/ShimmerButton'
-import { FormNotice } from '../components/sections/FormNotice'
-import { sendForm, type SendResult } from '../lib/forms'
-import { fontStyles, logoTypes, type QField, type Questionnaire as Q } from '../data/pages'
-import { cn } from '../lib/cn'
+import { PageHero } from '@/components/sections/PageHero'
+import { Cta } from '@/components/Cta'
+import { FormNotice } from '@/components/sections/FormNotice'
+import { sendForm, type SendResult } from '@/lib/forms'
+import { fontStyles, logoTypes, type QField, type Questionnaire as Q } from '@/data/pages'
+import { cn } from '@/lib/utils'
 
 function Field({ f, id }: { f: QField; id: string }) {
   const [file, setFile] = useState('')
@@ -69,7 +69,7 @@ export function QuestionnairePage({ q }: { q: Q }) {
           className="grid gap-6 rounded-[28px] border border-line bg-ink-2 p-6 sm:grid-cols-2 md:p-10"
         >
           {q.fields.map((f, i) => <Field key={f.label + i} f={f} id={`${q.slug}-${i}`} />)}
-          <div className="grid gap-3 sm:col-span-2"><FormNotice state={state} /><ShimmerButton type="submit" className="justify-self-start">Submit</ShimmerButton></div>
+          <div className="grid gap-3 sm:col-span-2"><FormNotice state={state} /><Cta type="submit" className="justify-self-start">Submit</Cta></div>
         </form>
 
         {q.logoGuide && (

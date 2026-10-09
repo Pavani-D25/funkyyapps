@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
+import { useInView } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface FlipTextProps {
@@ -43,6 +44,12 @@ interface FlipTextProps {
      * @default false
      */
     together?: boolean;
+
+    /**
+     * FUNKYY: hold the animation until the text scrolls into view
+     * @default false
+     */
+    playOnView?: boolean;
 }
 
 export function FlipText({
@@ -53,7 +60,11 @@ export function FlipText({
     loop = true,
     separator = " ",
     together = false,
+    playOnView = false,
 }: FlipTextProps) {
+    const ref = useRef<HTMLDivElement>(null);
+    const inView = useInView(ref, { once: true, amount: 0.4 });
+    const paused = playOnView && !inView;
     const words = useMemo(() => children.split(separator), [children, separator]);
     const totalChars = children.length;
 
@@ -68,11 +79,12 @@ export function FlipText({
 
     return (
         <div
+            ref={ref}
             className={cn(
                 "flip-text-wrapper inline-block leading-none",
                 className
             )}
-            style={{ perspective: "1000px" }}
+            style={{ perspective: "1000px", "--flip-state": paused ? "paused" : "running" } as React.CSSProperties}
         >
             {words.map((word, wordIndex) => {
                 const chars = word.split("");

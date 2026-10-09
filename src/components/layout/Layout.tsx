@@ -1,18 +1,19 @@
 import { useEffect } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Lenis from 'lenis'
 import { Mail, MessageCircle, CalendarClock, ShoppingBag } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Nav } from './Nav'
 import { Footer } from './Footer'
 import { QuoteForm } from '../sections/QuoteForm'
-import { Dock } from '../fx/Dock'
-import { contact } from '../../data/site'
-
-import { setLenis, getLenis } from '../../lib/scroll'
+import { Dock } from '@/components/unlumen-ui/dock'
+import { contact } from '@/data/site'
+import { setLenis, getLenis } from '@/lib/scroll'
 
 export function Layout() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const go = (to: string) => (e: React.MouseEvent<HTMLElement>) => { e.preventDefault(); navigate(to) }
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const lenis = new Lenis({ lerp: 0.11 })
@@ -45,12 +46,17 @@ export function Layout() {
       <QuoteForm />
       <Footer />
       <div className="fixed right-6 z-40 hidden md:block" style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)' }}>
-        <Dock items={[
-          { label: 'WhatsApp', icon: <MessageCircle size={20} />, href: contact.whatsappUrl },
-          { label: 'Email us', icon: <Mail size={20} />, href: `mailto:${contact.email}` },
-          { label: 'Consult', icon: <CalendarClock size={20} />, to: '/consult' },
-          { label: 'Shop', icon: <ShoppingBag size={20} />, to: '/shop' },
-        ]} />
+        {/* unlumen UI "Dock" */}
+        <Dock
+          iconSize={44}
+          magnification={1.45}
+          items={[
+            { label: 'WhatsApp', icon: <MessageCircle />, href: contact.whatsappUrl, external: true },
+            { label: 'Email us', icon: <Mail />, href: `mailto:${contact.email}`, separator: true },
+            { label: 'Consult', icon: <CalendarClock />, href: '/consult', onClick: go('/consult') },
+            { label: 'Shop', icon: <ShoppingBag />, href: '/shop', onClick: go('/shop') },
+          ]}
+        />
       </div>
     </div>
   )

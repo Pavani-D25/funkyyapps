@@ -12,6 +12,8 @@ export interface AnimatedTabsProps {
   onChange?: (tabId: string) => void;
   tabs: { id: string; label: string; icon?: ReactNode }[];
   variant?: "underline" | "pill" | "segment";
+  /** FUNKYY: stack the tabs vertically (arrow up/down move between them) */
+  orientation?: "horizontal" | "vertical";
 }
 
 const SPRING = {
@@ -28,7 +30,9 @@ export default function AnimatedTabs({
   variant = "underline",
   layoutId: customLayoutId,
   className,
+  orientation = "horizontal",
 }: AnimatedTabsProps) {
+  const vertical = orientation === "vertical";
   const shouldReduceMotion = useReducedMotion();
   const generatedId = useId();
   const layoutId = customLayoutId ?? `animated-tabs-${generatedId}`;
@@ -54,10 +58,10 @@ export default function AnimatedTabs({
     (event: React.KeyboardEvent, currentIndex: number) => {
       let newIndex = currentIndex;
 
-      if (event.key === "ArrowRight") {
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
         event.preventDefault();
         newIndex = (currentIndex + 1) % tabs.length;
-      } else if (event.key === "ArrowLeft") {
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
         event.preventDefault();
         newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
       } else if (event.key === "Home") {
@@ -85,14 +89,15 @@ export default function AnimatedTabs({
   const baseContainerStyles = cn(
     "relative inline-flex",
     variant === "underline" && "gap-1 border-border border-b",
-    variant === "pill" && "gap-1 rounded-full bg-muted p-1",
+    variant === "pill" && (vertical ? "flex-col gap-1 rounded-[24px] border border-border bg-card p-1.5" : "flex-wrap gap-1 rounded-[24px] border border-border bg-card p-1.5"),
     variant === "segment" && "gap-0 rounded-lg bg-muted p-1"
   );
 
   const getTabStyles = (isActive: boolean) =>
     cn(
-      "relative z-10 flex cursor-pointer items-center justify-center gap-2 px-4 py-2 font-medium text-sm transition-colors",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "relative z-10 flex cursor-pointer items-center gap-2 px-4 py-2.5 font-medium text-[15px] transition-colors",
+      vertical ? "justify-start text-left" : "justify-center",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
       variant === "underline" && [
         "rounded-t-md",
         isActive
@@ -102,7 +107,7 @@ export default function AnimatedTabs({
       variant === "pill" && [
         "rounded-full",
         isActive
-          ? "text-foreground"
+          ? "text-ink"
           : "text-muted-foreground hover:text-foreground",
       ],
       variant === "segment" && [
@@ -118,7 +123,7 @@ export default function AnimatedTabs({
       "absolute",
       variant === "underline" && "right-0 -bottom-px left-0 h-0.5 bg-brand",
       variant === "pill" &&
-        "inset-0 rounded-full border border-border bg-background shadow-sm",
+        "inset-0 rounded-full bg-bone shadow-sm",
       variant === "segment" &&
         "inset-0 rounded-md border border-border bg-background shadow-sm"
     );
@@ -126,6 +131,7 @@ export default function AnimatedTabs({
   return (
     <div
       aria-label="Tabs"
+      aria-orientation={orientation}
       className={cn(baseContainerStyles, className)}
       role="tablist"
     >

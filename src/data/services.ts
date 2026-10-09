@@ -305,17 +305,17 @@ export const mobile = {
   closer: 'Take your business to new heights by offering unmatched mobility to your customers!',
 }
 
-// Portfolio screenshots from the live site. Download them into /public/portfolio and switch
-// these to relative paths before launch; until then a drawn placeholder shows if one can't load.
-const U = 'https://funkyyapps.com/wp-content/uploads/'
+// Portfolio screenshots from the live site, served locally from /public/portfolio
+// (see public/portfolio/README.txt for where each one comes from). A drawn placeholder shows
+// inside the browser frame if a file is missing.
 export const portfolio = [
-  U + '2025/07/Screenshot-3-e1737631202920.png',
-  U + '2025/07/Screenshot-2025-01-23-161410-e1737631229748.png',
-  U + '2026/04/imresizer-Screenshot-2026-04-06-142421.png',
-  U + '2025/07/Screenshot-2-e1737631293905.png',
-  U + '2025/07/Screenshot-4-e1737631315878.png',
-  U + '2025/07/Screenshot-2025-05-3._imresizer-1.webp',
-  U + '2025/07/Screenshot.png',
-  U + '2025/07/Screenshot-1-2.png',
-  U + '2025/07/Screenshot-5.png',
+  '/portfolio/project-1.png',
+  '/portfolio/project-2.png',
+  '/portfolio/project-3.png',
+  '/portfolio/project-4.png',
+  '/portfolio/project-5.png',
+  '/portfolio/project-6.webp',
+  '/portfolio/project-7.png',
+  '/portfolio/project-8.png',
+  '/portfolio/project-9.png',
 ]
