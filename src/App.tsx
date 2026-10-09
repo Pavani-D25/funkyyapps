@@ -1,4 +1,5 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
+import { MotionConfig } from 'motion/react'
 import { Layout } from './components/layout/Layout'
 import { Home } from './pages/Home'
 import { About } from './pages/About'
@@ -19,6 +20,8 @@ import { questionnaires } from './data/pages'
 // switch to BrowserRouter and add a rewrite to index.html for clean URLs.
 export default function App() {
   return (
+    // reducedMotion="user": every Motion animation drops transforms when the OS asks for less motion
+    <MotionConfig reducedMotion="user">
     <HashRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -38,5 +41,6 @@ export default function App() {
         </Route>
       </Routes>
     </HashRouter>
+    </MotionConfig>
   )
 }

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { contact, packages, paypal, questionnaireLinks, quickLinks, servicesNav } from '@/data/site'
 import { CopyChip } from '@/components/sections/CopyChip'
 import { Marquee } from '@/components/ui/marquee'
+import { FlipText } from '@/components/ui/flip-text'
 
 export function Footer() {
   return (
@@ -51,7 +52,10 @@ export function Footer() {
         <span>© {new Date().getFullYear()} FUNKYY APPS</span>
         <span>Experts in Web Design, Product Development &amp; Search Engine Marketing</span>
       </div>
-      <p aria-hidden className="pointer-events-none -mb-[0.22em] text-center font-display text-[24vw] leading-none font-black tracking-tighter text-ink select-none">funkyy</p>
+      {/* Vengeance UI "Flip Text": the wordmark flips once when it scrolls into view */}
+      <div aria-hidden className="pointer-events-none -mb-[0.18em] overflow-hidden text-center font-display text-[24vw] leading-none font-black tracking-tighter text-ink select-none">
+        <FlipText loop={false} playOnView duration={1.6} className="leading-none">funkyy</FlipText>
+      </div>
     </footer>
   )
 }
