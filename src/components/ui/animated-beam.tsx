@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, type RefObject } from "react"
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
@@ -121,8 +121,12 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
     endYOffset,
   ])
 
+  // FUNKYY: with reduced motion only the static path is drawn, no travelling light
+  const reduceMotion = useReducedMotion()
+
   return (
     <svg
+      aria-hidden="true"
       fill="none"
       width={svgDimensions.width}
       height={svgDimensions.height}
@@ -140,13 +144,13 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         strokeOpacity={pathOpacity}
         strokeLinecap="round"
       />
-      <path
+      {!reduceMotion && <path
         d={pathD}
         strokeWidth={pathWidth}
         stroke={`url(#${id})`}
         strokeOpacity="1"
         strokeLinecap="round"
-      />
+      />}
       <defs>
         <motion.linearGradient
           className="transform-gpu"

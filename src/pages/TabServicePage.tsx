@@ -29,7 +29,7 @@ export function TabServicePage({ data, children }: { data: TabService; children?
           </div>
           <div {...panelProps(`${data.slug}-v`, tab)} className="min-w-0 rounded-[28px] border border-line bg-ink-2 p-6 md:p-12">
             <AnimatePresence mode="wait">
-              <motion.div key={tab} initial={{ x: 16 }} animate={{ x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.25 }}>
+              <motion.div key={tab} initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}>
                 <p className="font-display text-sm font-bold text-tang tabular-nums">{String(tab + 1).padStart(2, '0')} / {String(data.tabs.length).padStart(2, '0')}</p>
                 <h2 className="mt-3 text-3xl font-extrabold md:text-5xl">{t.label}</h2>
                 <div className="mt-8 grid max-w-[68ch] gap-6 text-lg text-mist">

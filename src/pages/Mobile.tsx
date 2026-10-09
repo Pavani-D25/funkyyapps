@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from 'motion/react'
 import { PageHero } from '@/components/sections/PageHero'
 import { Tabs, panelProps } from '@/components/sections/Tabs'
 import { Cta } from '@/components/Cta'
+import { Marquee } from '@/components/ui/marquee'
+import { StickyStack } from '@/components/ui/skiper-ui/skiper16'
 import { mobile } from '@/data/services'
 import { cn } from '@/lib/utils'
 
@@ -10,7 +12,6 @@ const TINT = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)', 
 
 export function Mobile() {
   const [why, setWhy] = useState(0)
-  const [stack, setStack] = useState(0)
   const [open, setOpen] = useState(0)
   const w = mobile.why[why]
   return (
@@ -35,7 +36,7 @@ export function Mobile() {
           <Tabs group="mobile-why" className="mt-10 flex" tabs={mobile.why.map((x) => x.label)} active={why} onChange={setWhy} />
           <div {...panelProps('mobile-why', why)} className="mt-6 overflow-hidden rounded-[28px] border border-line bg-ink-2">
             <AnimatePresence mode="wait">
-              <motion.div key={why} initial={{ y: 12 }} animate={{ y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="grid gap-8 p-7 md:p-12 lg:grid-cols-[0.8fr_1.4fr] lg:items-center">
+              <motion.div key={why} initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} className="grid gap-8 p-7 md:p-12 lg:grid-cols-[0.8fr_1.4fr] lg:items-center">
                 <p className="font-display text-[clamp(3.5rem,9vw,7.5rem)] leading-none font-black" style={{ color: TINT[why] }}>{w.stat}</p>
                 <div>
                   <h3 className="text-xl leading-snug font-bold md:text-2xl">{w.title}</h3>
@@ -74,31 +75,44 @@ export function Mobile() {
       <section className="section pt-0">
         <div className="wrap">
           <h2 className="text-4xl font-extrabold md:text-6xl">Our Mobile Application Development Tools and Frameworks</h2>
-          <Tabs group="mobile-stack" className="mt-10 flex" tabs={mobile.stack.map((x) => x.label)} active={stack} onChange={setStack} />
-          <AnimatePresence mode="wait">
-            <motion.ul key={stack} initial={{ y: 10 }} animate={{ y: 0 }} exit={{ opacity: 0 }} className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-              {mobile.stack[stack].items.map((s, i) => (
-                <motion.li key={s + i} initial={{ scale: 0.9 }} animate={{ scale: 1 }} transition={{ delay: i * 0.03 }} className="rounded-[20px] border border-line bg-ink-2 px-5 py-6 font-display text-lg font-bold">{s}</motion.li>
-              ))}
-            </motion.ul>
-          </AnimatePresence>
+        </div>
+        {/* Magic UI "Marquee": one row per group, alternating direction */}
+        <div className="mt-10 grid gap-4 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+          {mobile.stack.map((g, gi) => (
+            <div key={g.label} className="grid gap-2">
+              <h3 className="wrap font-sans text-sm font-semibold tracking-normal text-mist">{g.label}</h3>
+              <Marquee pauseOnHover reverse={gi % 2 === 1} className="[--duration:34s] [--gap:0.75rem]">
+                {g.items.map((s, i) => (
+                  <span key={s + i} className="flex items-center gap-3 rounded-full border border-line bg-ink-2 py-3 pr-6 pl-3 font-display text-lg font-bold whitespace-nowrap">
+                    <span aria-hidden className="grid size-9 place-items-center rounded-full text-sm font-black text-ink" style={{ background: TINT[(gi + i) % 4] }}>{s.replace(/[^A-Za-z0-9+#]/g, '').slice(0, 2)}</span>
+                    {s}
+                  </span>
+                ))}
+              </Marquee>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="section pt-0">
-        <div className="wrap">
-          <h2 className="max-w-[18ch] text-4xl font-extrabold md:text-6xl">{mobile.agileTitle}</h2>
-          <p className="mt-6 max-w-[64ch] text-lg text-mist">{mobile.agileText}</p>
-          <ol className="relative mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <h2 className="max-w-[18ch] text-4xl font-extrabold md:text-6xl">{mobile.agileTitle}</h2>
+            <p className="mt-6 max-w-[64ch] text-lg text-mist">{mobile.agileText}</p>
+            <div className="mt-10"><Cta to="/consult">Consult an Expert</Cta></div>
+          </div>
+          {/* Skiper UI scroll-driven card stack: each step pins and the earlier ones sink back */}
+          <StickyStack top={112} step={26} scaleStep={0.05} className="gap-6 pb-10">
             {mobile.process.map((p, i) => (
-              <li key={p.title} className="rounded-[28px] border border-line bg-ink-2 p-7">
-                <span className="font-display text-5xl font-black" style={{ color: TINT[i] }}>{i + 1}</span>
-                <h3 className="mt-4 text-xl font-bold">{p.title}</h3>
-                <p className="mt-3 text-[15px] text-mist">{p.text}</p>
-              </li>
+              <article key={p.title} className="min-h-[300px] rounded-[28px] border border-line p-7 shadow-[0_-24px_60px_-24px_rgba(0,0,0,.7)] md:p-10" style={{ background: i % 2 ? 'var(--color-ink-3)' : 'var(--color-ink-2)' }}>
+                <div className="flex items-start justify-between gap-6">
+                  <h3 className="text-2xl font-bold md:text-3xl">{p.title}</h3>
+                  <span className="font-display text-6xl leading-none font-black md:text-7xl" style={{ color: TINT[i] }}>{i + 1}</span>
+                </div>
+                <p className="mt-6 max-w-[56ch] text-mist">{p.text}</p>
+              </article>
             ))}
-          </ol>
-          <div className="mt-10"><Cta to="/consult">Consult an Expert</Cta></div>
+          </StickyStack>
         </div>
       </section>
 
