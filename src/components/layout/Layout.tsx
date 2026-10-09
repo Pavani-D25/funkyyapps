@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useLocation, useNavigate, useOutlet } from 'react-router-dom'
 import Lenis from 'lenis'
 import { Mail, MessageCircle, CalendarClock, ShoppingBag } from 'lucide-react'
@@ -10,10 +10,20 @@ import { SpringCursor } from '@/components/ui/skiper-ui/skiper61'
 import { Dock } from '@/components/unlumen-ui/dock'
 import { contact } from '@/data/site'
 import { setLenis, getLenis } from '@/lib/scroll'
+import { usePageMeta } from '@/lib/meta'
+import { pageLoaders } from '@/pages/loaders'
 
 export function Layout() {
   const { pathname } = useLocation()
   const outlet = useOutlet()
+  usePageMeta(pathname)
+  // warm the other page chunks once the first page is idle, so later navigation never waits
+  useEffect(() => {
+    const warm = () => Object.values(pageLoaders).forEach((load) => void load())
+    if ('requestIdleCallback' in window) { const id = window.requestIdleCallback(warm, { timeout: 5000 }); return () => window.cancelIdleCallback(id) }
+    const t = setTimeout(warm, 3000)
+    return () => clearTimeout(t)
+  }, [])
   const navigate = useNavigate()
   const go = (to: string) => (e: React.MouseEvent<HTMLElement>) => { e.preventDefault(); navigate(to) }
   useEffect(() => {
@@ -41,7 +51,7 @@ export function Layout() {
           animate={{ opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }}
           exit={{ opacity: 0, y: -10, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
         >
-          {outlet}
+          <Suspense fallback={<div className="min-h-screen" />}>{outlet}</Suspense>
         </motion.main>
       </AnimatePresence>
       <SpringCursor />

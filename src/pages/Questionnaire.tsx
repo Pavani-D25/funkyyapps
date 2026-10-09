@@ -4,7 +4,7 @@ import { PageHero } from '@/components/sections/PageHero'
 import { Cta } from '@/components/Cta'
 import { FormNotice } from '@/components/sections/FormNotice'
 import { sendForm, type SendResult } from '@/lib/forms'
-import { fontStyles, logoTypes, type QField, type Questionnaire as Q } from '@/data/pages'
+import { fontStyles, logoTypes, questionnaires, type QField } from '@/data/pages'
 import { cn } from '@/lib/utils'
 
 function Field({ f, id }: { f: QField; id: string }) {
@@ -58,8 +58,9 @@ function LogoDemo({ name }: { name: string }) {
   }
 }
 
-export function QuestionnairePage({ q }: { q: Q }) {
+export function QuestionnairePage({ slug }: { slug: string }) {
   const [state, setState] = useState<SendResult | null>(null)
+  const q = questionnaires.find((x) => x.slug === slug) ?? questionnaires[0]
   return (
     <>
       <PageHero title={q.title} kicker="Questionnaire">{q.intro.map((p) => <p key={p} className="mb-3">{p}</p>)}</PageHero>
