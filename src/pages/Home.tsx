@@ -1,48 +1,45 @@
 import { ArrowDownRight, MessageCircle, Phone } from 'lucide-react'
-import { HeroFluid } from '@/components/sections/HeroFluid'
+import { PixelLiquid } from '@/components/fx/PixelLiquid'
+import { StickerTrail } from '@/components/fx/StickerTrail'
+import { MorphText } from '@/components/fx/MorphText'
+import { ShimmerButton } from '@/components/fx/ShimmerButton'
 import { PlatformOrbit } from '@/components/sections/PlatformOrbit'
 import { TestimonialCard } from '@/components/sections/TestimonialCard'
 import { Cta } from '@/components/Cta'
-import { MorphText } from '@/components/ui/morph-text'
-import { TextAnimate } from '@/components/ui/text-animate'
 import { Marquee } from '@/components/ui/marquee'
 import { NumberTicker } from '@/components/ui/number-ticker'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { MagicCard } from '@/components/ui/magic-card'
 import { TextReveal } from '@/components/ui/text-reveal'
-import { HoverExpand } from '@/components/unlumen-ui/hover-expand'
+import { HoverExpand } from '@/components/fx/HoverExpand'
 import { StickyStack } from '@/components/ui/skiper-ui/skiper16'
 import { capabilities, contact, hero, industries, plans, platforms, servicesNav, testimonials, type Plan } from '@/data/site'
 import { cn } from '@/lib/utils'
 
-const SWATCH = ['var(--color-tang)', 'var(--color-lilac)', 'var(--color-butter)']
 
 export function Home() {
   const half = Math.ceil(testimonials.length / 2)
   const cols = [testimonials.slice(0, 3), testimonials.slice(3, 6), testimonials.slice(6)]
   return (
     <>
-      {/* ───────── Hero: the one loud moment (unlumen Pixel Liquid, desktop only) ───────── */}
-      <section className="relative isolate overflow-hidden">
-        <HeroFluid />
+      {/* ───────── Hero: the original hand-made hero, kept as it was (pixel canvas + sticker trail + flip text) ───────── */}
+      <StickerTrail className="relative isolate overflow-hidden">
+        <PixelLiquid className="absolute inset-0 -z-10 h-full w-full" />
         <div className="wrap pt-36 pb-16 md:pt-44 md:pb-24">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-mist md:text-base">
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-mist md:text-base">
             <span className="size-2 rounded-full bg-tang" />
-            One-stop for
-            {/* Vengeance UI "Morph Text" */}
-            <MorphText align="start" words={servicesNav.map((s) => s.label)} interval={2400} fontSize="1em" className="font-semibold text-bone" />
-          </div>
-          {/* Magic UI "Text Animate" on load */}
+            One-stop for <MorphText words={servicesNav.map((s) => s.label)} className="font-semibold text-bone" />
+          </p>
           <h1 className="mt-6 font-black leading-[0.9] tracking-[-0.045em]">
-            <TextAnimate as="span" by="word" animation="blurInUp" duration={0.5} className="block text-[clamp(2.5rem,9.2vw,9.5rem)]">{hero.lines[0]}</TextAnimate>
-            <TextAnimate as="span" by="word" animation="blurInUp" duration={0.5} delay={0.15} className="block text-[clamp(2.5rem,9.2vw,9.5rem)] text-tang">{hero.lines[1]}</TextAnimate>
+            <span className="block text-[clamp(2.5rem,9.2vw,9.5rem)]">{hero.lines[0]}</span>
+            <span className="block text-[clamp(2.5rem,9.2vw,9.5rem)] text-tang">{hero.lines[1]}</span>
           </h1>
           <div className="mt-10 grid items-end gap-10 md:mt-14 md:grid-cols-[1.1fr_1fr]">
             <div>
               <p className="max-w-[30ch] font-display text-xl font-semibold leading-snug md:text-2xl">{hero.tagline}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Cta href="#quote">Get a quote <ArrowDownRight size={18} /></Cta>
-                <Cta href={contact.whatsappUrl} variant="ghost"><MessageCircle size={18} /> WhatsApp: {contact.whatsapp}</Cta>
+                <ShimmerButton href="#quote">Get a quote <ArrowDownRight size={18} /></ShimmerButton>
+                <ShimmerButton href={contact.whatsappUrl} variant="ghost"><MessageCircle size={18} /> WhatsApp: {contact.whatsapp}</ShimmerButton>
               </div>
             </div>
             <div className="max-w-[46ch] space-y-3 text-mist md:justify-self-end">
@@ -51,7 +48,7 @@ export function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </StickerTrail>
 
       {/* ───────── Trusted By: Magic UI 3D marquee (desktop) / two rows (mobile) ───────── */}
       <section className="section pt-10">
@@ -86,30 +83,19 @@ export function Home() {
         </TextReveal>
       </section>
 
-      {/* ───────── Discover Our Excellence: unlumen "Hover Expand" ───────── */}
+      {/* ───────── Discover Our Excellence: the original expanding columns, kept as they were ───────── */}
       <section className="section pt-0">
         <div className="wrap">
           <div className="mb-10 grid gap-6 md:grid-cols-2 md:items-end">
-            <h2 className="text-4xl font-extrabold md:text-6xl">Discover Our Excellence</h2>
+            <h2 className="text-4xl font-extrabold md:text-5xl lg:text-6xl">Discover Our Excellence</h2>
             <p className="max-w-[48ch] text-mist md:justify-self-end">Explore our cutting-edge websites across various industries. Each project exemplifies our commitment to superior quality, innovation, and technical prowess.</p>
           </div>
-          <HoverExpand
-            collapsedHeight={64}
-            expandedHeight={300}
-            items={industries.map((it, i) => ({
-              label: it.name,
-              accent: SWATCH[i % 3],
-              content: (
-                <ul className="grid max-w-[34rem] gap-1.5 pr-10 text-[15px] font-medium sm:grid-cols-2">
-                  {it.items.map((x) => <li key={x} className="flex items-center gap-2"><span className="size-1.5 shrink-0 rounded-full bg-ink" />{x}</li>)}
-                </ul>
-              ),
-            }))}
-          />
+          <HoverExpand items={industries} />
         </div>
       </section>
 
-      {/* ───────── Capabilities band (Magic UI Marquee) ───────── */}
+      {/* ───────── Capabilities band (Magic UI Marquee); wrapper clips the tilted edges ───────── */}
+      <div className="overflow-hidden py-6">
       <section aria-label="Capabilities" className="-rotate-2 border-y border-line bg-tang py-5 text-ink">
         <Marquee className="p-0 [--duration:50s] [--gap:2.5rem]">
           {capabilities.slice(0, 7).map((c) => <span key={c} className="flex items-center gap-10 font-display text-2xl font-extrabold whitespace-nowrap md:text-4xl">{c}<span className="size-3 rounded-full bg-ink" /></span>)}
@@ -120,6 +106,7 @@ export function Home() {
           {capabilities.slice(7).map((c) => <span key={c} className="flex items-center gap-10 font-display text-2xl font-extrabold whitespace-nowrap md:text-4xl">{c}<span className="size-3 rotate-45 bg-ink" /></span>)}
         </Marquee>
       </section>
+      </div>
 
       {/* ───────── Versatile Development Expertise: Magic UI "Orbiting Circles" ───────── */}
       <section className="section">
