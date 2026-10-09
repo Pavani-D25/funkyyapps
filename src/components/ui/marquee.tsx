@@ -43,11 +43,19 @@ export function Marquee({
   repeat = 4,
   ...props
 }: MarqueeProps) {
-  // FUNKYY: with reduced motion, show one static copy that wraps instead of an endless scroll.
+  // FUNKYY: with reduced motion, show one static copy the visitor can swipe/scroll through
+  // (contained, so it never widens the page) instead of an endless animation.
   const reduceMotion = useReducedMotion()
   if (reduceMotion) {
     return (
-      <div {...props} className={cn("flex flex-wrap justify-center gap-(--gap) p-2 [--gap:1rem]", vertical && "flex-col", className)}>
+      <div
+        {...props}
+        className={cn(
+          "flex gap-(--gap) p-2 [--gap:1rem]",
+          vertical ? "flex-col overflow-y-auto" : "flex-row overflow-x-auto overscroll-x-contain",
+          className
+        )}
+      >
         {children}
       </div>
     )

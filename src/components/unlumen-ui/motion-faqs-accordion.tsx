@@ -116,6 +116,9 @@ function AccordionItem({
         id={panelId}
         role="region"
         aria-labelledby={itemId}
+        // FUNKYY: closed answers are only squashed to 0px, so take them out of the tab order / a11y tree
+        aria-hidden={!isOpen}
+        inert={!isOpen}
         animate={{
           height: isOpen ? contentH : 0,
           opacity: isOpen ? 1 : 0,
