@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 /* Layout concept: a dark "pine ink" studio wall covered in bright print stickers.
    One loud moment (the hero), everything else quiet, wide and typographic. */
@@ -26,7 +30,7 @@
   @keyframes shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
 }
 
-:root { color-scheme: dark; }
+:root { color-scheme: dark; --amber: oklch(0.77 0.16 75); --amber-fg: oklch(0.22 0 0); --amber-hover: oklch(0.71 0.17 70); --blue: oklch(0.62 0.19 256); --blue-fg: #fff; --blue-hover: oklch(0.56 0.2 256); --green: oklch(0.7 0.17 152); --green-fg: #fff; --green-hover: oklch(0.64 0.18 152); --smooth-50: oklch(0.99 0 0); --smooth-100: oklch(0.972 0 0); --smooth-200: oklch(0.945 0 0); --smooth-300: oklch(0.91 0 0); --smooth-400: oklch(0.865 0 0); --smooth-500: oklch(0.81 0 0); --smooth-600: oklch(0.74 0 0); --smooth-700: oklch(0.66 0 0); --smooth-800: oklch(0.56 0 0); --smooth-900: oklch(0.47 0 0); --smooth-950: oklch(0.36 0 0); --smooth-1000: oklch(0.22 0 0); }
 html { background: var(--color-ink); overflow-x: clip; }
 body {
   background: var(--color-ink);
@@ -68,4 +72,131 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* ── shadcn semantic tokens, mapped onto the brand palette ──
+   Every installed registry component (Magic UI, SmoothUI, unlumen, Skiper, Vengeance) reads these,
+   so they render in pine-ink / tangerine / lilac instead of each library's neutral default. */
+:root {
+  --radius: 1rem;
+  --background: var(--color-ink);
+  --foreground: var(--color-bone);
+  --card: var(--color-ink-2);
+  --card-foreground: var(--color-bone);
+  --popover: var(--color-ink-2);
+  --popover-foreground: var(--color-bone);
+  --primary: var(--color-tang);
+  --primary-foreground: var(--color-ink);
+  --secondary: var(--color-ink-3);
+  --secondary-foreground: var(--color-bone);
+  --muted: var(--color-ink-3);
+  --muted-foreground: var(--color-mist);
+  --accent: var(--color-ink-3);
+  --accent-foreground: var(--color-bone);
+  --destructive: #ff5a4f;
+  --border: var(--color-line);
+  --input: var(--color-line);
+  --ring: var(--color-lilac);
+  --chart-1: var(--color-tang);
+  --chart-2: var(--color-lilac);
+  --chart-3: var(--color-butter);
+  --chart-4: var(--color-mist);
+  --chart-5: var(--color-bone);
+}
+
+@theme inline {
+  --font-heading: var(--font-display);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+  --color-brand: var(--brand, oklch(0.72 0.2 352.53));
+  --color-brand-light: var(--brand-light, oklch(0.78 0.15 352.53));
+  --color-brand-lighter: var(--brand-lighter, oklch(0.85 0.1 352.53));
+  --color-brand-secondary: var(--brand-secondary, oklch(0.66 0.21 354.31));
+  --color-amber: var(--amber);
+  --color-amber-fg: var(--amber-fg);
+  --color-amber-hover: var(--amber-hover);
+  --color-blue: var(--blue);
+  --color-blue-fg: var(--blue-fg);
+  --color-blue-hover: var(--blue-hover);
+  --color-green: var(--green);
+  --color-green-fg: var(--green-fg);
+  --color-green-hover: var(--green-hover);
+  --color-smooth-50: var(--smooth-50);
+  --color-smooth-100: var(--smooth-100);
+  --color-smooth-200: var(--smooth-200);
+  --color-smooth-300: var(--smooth-300);
+  --color-smooth-400: var(--smooth-400);
+  --color-smooth-500: var(--smooth-500);
+  --color-smooth-600: var(--smooth-600);
+  --color-smooth-700: var(--smooth-700);
+  --color-smooth-800: var(--smooth-800);
+  --color-smooth-900: var(--smooth-900);
+  --color-smooth-950: var(--smooth-950);
+  --color-smooth-1000: var(--smooth-1000)
+}
+
+@layer base {
+  * { @apply border-border; }
+}
+
+.dark {
+  --amber: oklch(0.8 0.15 75);
+  --amber-fg: oklch(0.2 0 0);
+  --amber-hover: oklch(0.85 0.14 72);
+  --blue: oklch(0.66 0.18 256);
+  --blue-fg: #fff;
+  --blue-hover: oklch(0.72 0.16 256);
+  --green: oklch(0.73 0.16 152);
+  --green-fg: oklch(0.2 0 0);
+  --green-hover: oklch(0.79 0.15 152);
+  --smooth-50: oklch(0.2 0 0);
+  --smooth-100: oklch(0.235 0 0);
+  --smooth-200: oklch(0.275 0 0);
+  --smooth-300: oklch(0.315 0 0);
+  --smooth-400: oklch(0.36 0 0);
+  --smooth-500: oklch(0.41 0 0);
+  --smooth-600: oklch(0.47 0 0);
+  --smooth-700: oklch(0.55 0 0);
+  --smooth-800: oklch(0.66 0 0);
+  --smooth-900: oklch(0.74 0 0);
+  --smooth-950: oklch(0.85 0 0);
+  --smooth-1000: oklch(0.96 0 0);
 }

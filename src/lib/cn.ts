@@ -1,3 +1,2 @@
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
+// Kept so older imports keep working; shadcn/registry components import from '@/lib/utils'.
+export { cn } from './utils'
