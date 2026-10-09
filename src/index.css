@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Layout concept: a dark "pine ink" studio wall covered in bright print stickers.
+   One loud moment (the hero), everything else quiet, wide and typographic. */
+@theme {
+  --color-ink: #10201f;        /* page ground: deep pine-black */
+  --color-ink-2: #162a29;      /* raised surfaces */
+  --color-ink-3: #1d3634;      /* hover / inputs */
+  --color-line: #2b4643;       /* hairlines */
+  --color-bone: #f1ebdd;       /* main text */
+  --color-mist: #a4b8b3;       /* muted text */
+  --color-tang: #ff6b2c;       /* tangerine – primary accent */
+  --color-lilac: #c9b6ff;      /* lilac – secondary pop */
+  --color-butter: #ffd84d;     /* sticker yellow, used sparingly */
+
+  --font-display: "Unbounded Variable", "Arial Black", system-ui, sans-serif;
+  --font-sans: "Hanken Grotesk Variable", "Segoe UI", system-ui, sans-serif;
+
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-marquee-y: marquee-y var(--duration, 40s) linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+
+  @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(calc(-100% - var(--gap))) } }
+  @keyframes marquee-y { from { transform: translateY(0) } to { transform: translateY(calc(-100% - var(--gap))) } }
+  @keyframes shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
+}
+
+:root { color-scheme: dark; }
+html { background: var(--color-ink); overflow-x: clip; }
+body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; line-height: 1.05; letter-spacing: -0.02em; }
+p { text-wrap: pretty; }
+::selection { background: var(--color-tang); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-lilac); outline-offset: 3px; border-radius: 6px; }
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* subtle print grain over everything */
+.grain::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+.section { padding-block: clamp(72px, 10vw, 140px); }
+
+.field {
+  width: 100%; background: var(--color-ink-3); border: 1px solid var(--color-line); border-radius: 14px;
+  padding: 14px 16px; color: var(--color-bone); font: inherit; transition: border-color .2s, background .2s;
+}
+.field::placeholder { color: color-mix(in oklab, var(--color-mist) 70%, transparent); }
+.field:focus { outline: none; border-color: var(--color-lilac); background: var(--color-ink-2); }
+select.field { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--color-mist) 50%), linear-gradient(135deg, var(--color-mist) 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
+
+.prose-fa p + p { margin-top: 1em; }
+.prose-fa ul { display: grid; gap: .6em; margin-top: .8em; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
