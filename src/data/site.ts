@@ -61,16 +61,17 @@ export const testimonials: Testimonial[] = [
   { name: 'Stephan Esch', org: 'Germany', quote: 'Yugender Singh did an exceptional job with designing and connecting the new business page to our domain. His knowledge and experience in this is field is awesome. Especially to mention is his patience with me as a customer who is not much into these computer things. I can highly recommend to work with this company.' },
 ]
 
-export const industries: { name: string; items: string[] }[] = [
-  { name: 'Custom Websites', items: ['Corporate Websites', 'Personal Blogs and Portfolios', 'Educational Institutions', 'Non-Profit Organizations'] },
-  { name: 'E-commerce', items: ['Retail Stores', 'Marketplaces', 'Subscription Services', 'Niche Product Stores', 'Dropshipping'] },
-  { name: 'Finance and Banking', items: ['Banking Websites', 'Investment Platforms', 'Fintech Solutions'] },
-  { name: 'Real Estate', items: ['Property Listings', 'Property Management', 'Real Estate Investment'] },
-  { name: 'Education and E-Learning', items: ['Online Course Platforms', 'Tutoring Services', 'Educational Resources'] },
-  { name: 'Travel and Hospitality', items: ['Travel Agencies', 'Hotel and Resort Websites', 'Tourism Boards'] },
-  { name: 'Entertainment and Media', items: ['Streaming Services', 'News Portals', 'Event Management'] },
-  { name: 'Professional Services', items: ['Law Firms', 'Consulting Firms', 'Accounting and Financial Services'] },
-  { name: 'Hospitality and Food Service', items: ['Restaurants and Cafes', 'Food Delivery Services', 'Catering Services'] },
+// shots: two full-page homepage captures per industry (public/industries/NN-1.webp, NN-2.webp), same as the live site
+export const industries: { name: string; items: string[]; shots: string[] }[] = [
+  { name: 'Custom Websites', items: ['Corporate Websites', 'Personal Blogs and Portfolios', 'Educational Institutions', 'Non-Profit Organizations'], shots: ['/industries/01-1.webp', '/industries/01-2.webp'] },
+  { name: 'E-commerce', items: ['Retail Stores', 'Marketplaces', 'Subscription Services', 'Niche Product Stores', 'Dropshipping'], shots: ['/industries/02-1.webp', '/industries/02-2.webp'] },
+  { name: 'Finance and Banking', items: ['Banking Websites', 'Investment Platforms', 'Fintech Solutions'], shots: ['/industries/03-1.webp', '/industries/03-2.webp'] },
+  { name: 'Real Estate', items: ['Property Listings', 'Property Management', 'Real Estate Investment'], shots: ['/industries/04-1.webp', '/industries/04-2.webp'] },
+  { name: 'Education and E-Learning', items: ['Online Course Platforms', 'Tutoring Services', 'Educational Resources'], shots: ['/industries/05-1.webp', '/industries/05-2.webp'] },
+  { name: 'Travel and Hospitality', items: ['Travel Agencies', 'Hotel and Resort Websites', 'Tourism Boards'], shots: ['/industries/06-1.webp', '/industries/06-2.webp'] },
+  { name: 'Entertainment and Media', items: ['Streaming Services', 'News Portals', 'Event Management'], shots: ['/industries/07-1.webp', '/industries/07-2.webp'] },
+  { name: 'Professional Services', items: ['Law Firms', 'Consulting Firms', 'Accounting and Financial Services'], shots: ['/industries/08-1.webp', '/industries/08-2.webp'] },
+  { name: 'Hospitality and Food Service', items: ['Restaurants and Cafes', 'Food Delivery Services', 'Catering Services'], shots: ['/industries/09-1.webp', '/industries/09-2.webp'] },
 ]
 
 export const capabilities = [

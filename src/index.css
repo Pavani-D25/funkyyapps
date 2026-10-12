@@ -183,10 +183,16 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 @keyframes aurora-smooth-bg { from { background-position: 50% 50%, 50% 50% } to { background-position: 350% 50%, 350% 50% } }
 .animate-aurora-bg { animation: aurora-smooth-bg 60s linear infinite; }
 
+/* Industry previews: a full-page homepage capture that slowly scrolls inside its frame (like the live site's
+   "scrolling screenshot" boxes). Holds at the top and bottom, then scrolls back. Pauses while hovered. */
+@keyframes site-pan { 0%, 8% { object-position: 50% 0% } 46%, 54% { object-position: 50% 100% } 92%, 100% { object-position: 50% 0% } }
+.site-pan { animation: site-pan var(--pan, 26s) ease-in-out infinite; }
+.site-pan:hover { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .flip-char, .flip-char::before, .flip-char::after { animation: none !important; }
-  .animate-marquee, .animate-marquee-vertical, .animate-orbit { animation: none !important; }
+  .animate-marquee, .animate-marquee-vertical, .animate-orbit, .site-pan { animation: none !important; }
 }
 
 /* swipe rows: scrollable, but without a visible scrollbar */
