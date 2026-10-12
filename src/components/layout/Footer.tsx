@@ -52,9 +52,9 @@ export function Footer() {
         <span>© {new Date().getFullYear()} FUNKYY APPS</span>
         <span>Experts in Web Design, Product Development &amp; Search Engine Marketing</span>
       </div>
-      {/* Vengeance UI "Flip Text": the wordmark flips once when it scrolls into view */}
-      <div aria-hidden className="pointer-events-none -mb-[0.18em] overflow-hidden text-center font-display text-[24vw] leading-none font-black tracking-tighter text-ink select-none">
-        <FlipText loop={false} playOnView duration={1.6} className="leading-none">funkyy</FlipText>
+      {/* Vengeance UI "Flip Text": the neon wordmark keeps flipping once it scrolls into view */}
+      <div aria-hidden className="pointer-events-none -mb-[0.18em] overflow-hidden text-center font-display text-[24vw] leading-none font-black tracking-tighter text-tang select-none [filter:drop-shadow(0_0_18px_rgb(255_107_44/0.55))_drop-shadow(0_0_42px_rgb(177_77_255/0.35))]">
+        <FlipText playOnView duration={3.2} className="leading-none">funkyy</FlipText>
       </div>
     </footer>
   )

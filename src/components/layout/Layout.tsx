@@ -5,6 +5,7 @@ import { Mail, MessageCircle, CalendarClock, ShoppingBag } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Nav } from './Nav'
 import { Footer } from './Footer'
+import { NeonBackdrop } from '@/components/fx/NeonBackdrop'
 import { QuoteForm } from '@/components/sections/QuoteForm'
 import { SpringCursor } from '@/components/ui/skiper-ui/skiper61'
 import { Dock } from '@/components/unlumen-ui/dock'
@@ -40,6 +41,8 @@ export function Layout() {
 
   return (
     <div className="grain">
+      {/* homepage only: neon backdrop behind everything (fades in/out with the route change) */}
+      <AnimatePresence>{pathname === '/' && <NeonBackdrop key="neon" />}</AnimatePresence>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-full focus:bg-bone focus:px-4 focus:py-2 focus:text-ink">Skip to content</a>
       <Nav />
       {/* route transition: AnimatePresence keeps the outgoing page (frozen outlet) until it has faded */}

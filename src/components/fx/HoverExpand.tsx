@@ -44,13 +44,12 @@ export function HoverExpand({ items }: { items: Industry[] }) {
               layout
               onPointerEnter={() => setActive(i)}
               onFocus={() => setActive(i)}
-              className={cn('relative flex min-w-0 flex-col justify-between overflow-hidden rounded-[22px] border text-left', on ? 'border-transparent p-5 text-ink' : 'border-line bg-ink-2 px-3 py-5 text-bone')}
+              className={cn('relative flex min-w-0 flex-col justify-end overflow-hidden rounded-[22px] border text-left', on ? 'border-transparent p-5 text-ink' : 'border-line bg-ink-2 px-3 py-5 text-bone')}
               style={{ flex: on ? 14 : 1, background: on ? SWATCH[i % 3] : undefined }}
               transition={{ type: 'spring', stiffness: 220, damping: 30 }}
             >
-              <span className={cn('font-display text-sm font-bold tabular-nums', on ? 'text-ink/60' : 'text-mist')}>{String(i + 1).padStart(2, '0')}</span>
               {on ? (
-                <motion.div initial={{ y: 12 }} animate={{ y: 0 }} className="mt-3 flex min-h-0 min-w-[380px] flex-1 flex-col">
+                <motion.div initial={{ y: 12 }} animate={{ y: 0 }} className="flex min-h-0 min-w-[380px] flex-1 flex-col">
                   <p className="font-display text-3xl font-extrabold leading-none">{it.name}</p>
                   <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-[15px] font-medium">
                     {it.items.map((s) => <li key={s} className="flex items-center gap-2"><span className="size-1.5 shrink-0 rounded-full bg-ink" />{s}</li>)}
@@ -114,8 +113,7 @@ function MobilePicker({ items }: { items: Industry[] }) {
         dragElastic={0.18}
         onDragEnd={(_, info) => { if (info.offset.x < -50) go(active + 1); else if (info.offset.x > 50) go(active - 1) }}
       >
-        <div className="flex items-center justify-between">
-          <span className="font-display text-sm font-bold text-ink/60 tabular-nums">{String(active + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
+        <div className="flex items-center justify-end">
           <span className="flex gap-1.5">
             <button type="button" onClick={() => go(active - 1)} aria-label="Previous industry" className="grid size-9 place-items-center rounded-full border border-ink/25 text-lg leading-none">‹</button>
             <button type="button" onClick={() => go(active + 1)} aria-label="Next industry" className="grid size-9 place-items-center rounded-full border border-ink/25 text-lg leading-none">›</button>

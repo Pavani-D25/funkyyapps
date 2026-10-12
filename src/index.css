@@ -109,7 +109,7 @@
 
 html { background: var(--color-ink); overflow-x: clip; }
 body {
-  background: var(--color-ink);
+  background: transparent; /* html paints the ink ground; lets the homepage's fixed neon backdrop show through */
   color: var(--color-bone);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -189,13 +189,36 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 .site-pan { animation: site-pan var(--pan, 26s) ease-in-out infinite; }
 .site-pan:hover { animation-play-state: paused; }
 
+/* ── Homepage neon backdrop (components/fx/NeonBackdrop) ──
+   Night ground + four neon clouds (tangerine, violet, logo green, cyan) that drift on long loops,
+   a synthwave grid floor rolling toward the viewer, and a pointer glow. Screen-blended so they mix like light. */
+.neon-backdrop { background: radial-gradient(120% 80% at 50% 0%, #0b1a24 0%, #060b10 55%, #04070a 100%); }
+.neon-blob { position: absolute; width: 62vmax; aspect-ratio: 1; border-radius: 50%; mix-blend-mode: screen; opacity: .8; will-change: transform; }
+.neon-blob-1 { top: -22vmax; left: -18vmax; background: radial-gradient(circle, rgb(255 107 44 / .75) 0%, rgb(255 107 44 / .18) 38%, transparent 66%); animation: neon-drift-a 28s ease-in-out infinite alternate; }
+.neon-blob-2 { top: 6vh; right: -26vmax; background: radial-gradient(circle, rgb(177 77 255 / .8) 0%, rgb(177 77 255 / .2) 40%, transparent 66%); animation: neon-drift-b 34s ease-in-out infinite alternate; }
+.neon-blob-3 { bottom: -34vmax; left: 8vw; background: radial-gradient(circle, rgb(24 227 155 / .6) 0%, rgb(24 227 155 / .14) 40%, transparent 66%); animation: neon-drift-c 31s ease-in-out infinite alternate; }
+.neon-blob-4 { width: 42vmax; top: 38vh; left: 38vw; background: radial-gradient(circle, rgb(34 211 238 / .55) 0%, rgb(34 211 238 / .12) 40%, transparent 66%); animation: neon-drift-d 23s ease-in-out infinite alternate; }
+@keyframes neon-drift-a { to { transform: translate(22vw, 18vh) scale(1.15) } }
+@keyframes neon-drift-b { to { transform: translate(-26vw, 30vh) scale(.9) } }
+@keyframes neon-drift-c { to { transform: translate(30vw, -22vh) scale(1.2) } }
+@keyframes neon-drift-d { to { transform: translate(-30vw, -26vh) scale(1.1) } }
+.neon-floor { position: absolute; inset-inline: 0; bottom: 0; height: 46vh; perspective: 360px; overflow: hidden;
+  mask-image: linear-gradient(to top, #000 0%, rgb(0 0 0 / .55) 45%, transparent 100%); }
+.neon-grid { position: absolute; left: -60%; right: -60%; bottom: 0; height: 220%; transform-origin: 50% 100%; transform: rotateX(68deg);
+  background-image: linear-gradient(rgb(214 160 255 / .8) 1.5px, transparent 1.5px), linear-gradient(90deg, rgb(214 160 255 / .65) 1.5px, transparent 1.5px);
+  background-size: 72px 72px; animation: neon-grid-run 2.6s linear infinite; filter: drop-shadow(0 0 6px rgb(177 77 255 / .9)); }
+@keyframes neon-grid-run { to { background-position: 0 72px, 0 0 } }
+.neon-spot { position: absolute; left: 0; top: 0; width: 620px; height: 620px; margin: -310px 0 0 -310px; opacity: 0; transition: opacity .6s;
+  border-radius: 50%; mix-blend-mode: screen; will-change: transform;
+  background: radial-gradient(circle, rgb(255 107 44 / .28) 0%, rgb(177 77 255 / .16) 35%, transparent 68%); }
+
 /* Trusted By deck: the bar under the quote fills while the front card waits */
 @keyframes deck-progress { from { transform: scaleX(0) } to { transform: scaleX(1) } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .flip-char, .flip-char::before, .flip-char::after { animation: none !important; }
-  .animate-marquee, .animate-marquee-vertical, .animate-orbit, .site-pan { animation: none !important; }
+  .animate-marquee, .animate-marquee-vertical, .animate-orbit, .site-pan, .neon-blob, .neon-grid { animation: none !important; }
 }
 
 /* swipe rows: scrollable, but without a visible scrollbar */

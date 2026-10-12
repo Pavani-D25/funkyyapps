@@ -73,7 +73,6 @@ export function BrandDeck({ items, heading }: { items: Testimonial[]; heading: R
       {/* the front card's quote: every quote sits in the same grid cell so the box keeps the tallest height */}
       <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
         <div className="mb-6 flex items-center gap-4">
-          <span className="font-display text-sm font-bold text-mist tabular-nums">{String(active + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}</span>
           {/* the bar's animation end deals the next card, so a pause freezes both together */}
           <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-line">
             {!reduce && (
