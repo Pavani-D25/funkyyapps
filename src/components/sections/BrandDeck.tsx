@@ -1,6 +1,6 @@
 // "Trusted By" as a hand of cards: the clients' logo cards (from the live site's coverflow) fanned in an arc.
 // The front card stands up straight and its quote shows alongside. The deck deals itself forward when the
-// progress bar fills (paused on hover/focus and off-screen); click a card, use the arrows or swipe to move.
+// progress bar fills (keeps going under the mouse; pauses only for keyboard focus and off-screen); click a card, use the arrows or swipe to move.
 import { motion, useInView, useReducedMotion } from 'motion/react'
 import { useRef, useState, type ReactNode } from 'react'
 import type { Testimonial } from '@/data/site'
@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 const STEP = 7 // degrees between neighbouring cards
 const SPREAD = 17 // % of a card's width between neighbouring cards
 const SHOW = 3 // cards visible on each side of the front one
-const DWELL = 5 // seconds per card
+const DWELL = 3 // seconds per card
 
 export function BrandDeck({ items, heading }: { items: Testimonial[]; heading: ReactNode }) {
   const n = items.length
@@ -25,8 +25,6 @@ export function BrandDeck({ items, heading }: { items: Testimonial[]; heading: R
   return (
     <div
       className="grid items-center gap-x-12 gap-y-8 lg:grid-cols-[0.9fr_1.1fr] lg:grid-rows-[auto_1fr]"
-      onPointerEnter={(e) => { if (e.pointerType === 'mouse') setHold(true) }}
-      onPointerLeave={(e) => { if (e.pointerType === 'mouse') setHold(false) }}
       onFocus={(e) => { if (e.target.matches(':focus-visible')) setHold(true) }}
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setHold(false) }}
     >
