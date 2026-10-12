@@ -49,16 +49,17 @@ export const hero = {
   trusted: 'Trusted by brands, we’re your premier partner in digital transformation.',
 }
 
-export type Testimonial = { name: string; org?: string; quote: string }
+// brand + image: the client's logo card from the live site's "Trusted By" carousel (public/brands)
+export type Testimonial = { name: string; org?: string; quote: string; brand?: string; image?: string }
 export const testimonials: Testimonial[] = [
-  { name: 'Virtual', quote: '"Keep up the good work"' },
-  { name: 'Nan Henson', org: 'Buena Trademaster Plumbing, LLC.', quote: 'We really appreciate you, you have no idea how grateful I am to have found you. Thanks Yogi.' },
-  { name: 'Neiko Stewart', quote: 'I appreciate you, Yogi! Thank you. We will continue to work together. You are my favorite too. It is about creating lasting relationships. I will also need you to develop sites for my PoCs regarding new SaaS projects. We have a lot of work ahead. I am truly blessed to have you on my team. Thank you again! Also, for designing my LinkedIn Business Profile Page. I truly appreciate you' },
-  { name: 'Capt. Mike', org: 'Mobile Bay Adventures', quote: 'I am pleased with your work and it’s been enjoyable working with you on this project.' },
-  { name: 'Nick Baldwin', org: 'Monarch Construction', quote: 'Everything looks good and appreciate your help.' },
-  { name: 'Mark Moore', org: 'The Law Offices of Mark Q. Moore, LLC', quote: 'Thanks for putting together a professional look for my practice.' },
-  { name: 'Jason Whitehurst', org: 'Founder & Chief AI Officer FutureSafe Incorporated', quote: 'You do good work. I think your work and price is worthy of recommending you to the customers we have.' },
-  { name: 'Stephan Esch', org: 'Germany', quote: 'Yugender Singh did an exceptional job with designing and connecting the new business page to our domain. His knowledge and experience in this is field is awesome. Especially to mention is his patience with me as a customer who is not much into these computer things. I can highly recommend to work with this company.' },
+  { name: 'Virtual', brand: 'Virtual Drive', image: '/brands/virtual-drive.webp', quote: '"Keep up the good work"' },
+  { name: 'Nan Henson', brand: 'Buena Trademaster Plumbing', image: '/brands/buena-plumbing.webp', org: 'Buena Trademaster Plumbing, LLC.', quote: 'We really appreciate you, you have no idea how grateful I am to have found you. Thanks Yogi.' },
+  { name: 'Neiko Stewart', brand: 'Neiko Stewart', image: '/brands/neiko-stewart.webp', quote: 'I appreciate you, Yogi! Thank you. We will continue to work together. You are my favorite too. It is about creating lasting relationships. I will also need you to develop sites for my PoCs regarding new SaaS projects. We have a lot of work ahead. I am truly blessed to have you on my team. Thank you again! Also, for designing my LinkedIn Business Profile Page. I truly appreciate you' },
+  { name: 'Capt. Mike', brand: 'Mobile Bay Adventures', image: '/brands/mobile-bay.webp', org: 'Mobile Bay Adventures', quote: 'I am pleased with your work and it’s been enjoyable working with you on this project.' },
+  { name: 'Nick Baldwin', brand: 'Monarch Construction', image: '/brands/monarch.webp', org: 'Monarch Construction', quote: 'Everything looks good and appreciate your help.' },
+  { name: 'Mark Moore', brand: 'The Law Offices of Mark Q. Moore', image: '/brands/mark-moore-law.webp', org: 'The Law Offices of Mark Q. Moore, LLC', quote: 'Thanks for putting together a professional look for my practice.' },
+  { name: 'Jason Whitehurst', brand: 'FutureSafe', image: '/brands/futuresafe.webp', org: 'Founder & Chief AI Officer FutureSafe Incorporated', quote: 'You do good work. I think your work and price is worthy of recommending you to the customers we have.' },
+  { name: 'Stephan Esch', brand: 'Stephan Esch Gartenbau', image: '/brands/stephan-esch.webp', org: 'Germany', quote: 'Yugender Singh did an exceptional job with designing and connecting the new business page to our domain. His knowledge and experience in this is field is awesome. Especially to mention is his patience with me as a customer who is not much into these computer things. I can highly recommend to work with this company.' },
 ]
 
 // shots: two full-page homepage captures per industry (public/industries/NN-1.webp, NN-2.webp), same as the live site

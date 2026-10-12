@@ -4,7 +4,7 @@ import { StickerTrail } from '@/components/fx/StickerTrail'
 import { MorphText } from '@/components/fx/MorphText'
 import { ShimmerButton } from '@/components/fx/ShimmerButton'
 import { PlatformOrbit } from '@/components/sections/PlatformOrbit'
-import { TestimonialCard } from '@/components/sections/TestimonialCard'
+import { BrandDeck } from '@/components/sections/BrandDeck'
 import { Cta } from '@/components/Cta'
 import { Marquee } from '@/components/ui/marquee'
 import { NumberTicker } from '@/components/ui/number-ticker'
@@ -22,7 +22,6 @@ import { cn } from '@/lib/utils'
 const MANIFESTO = 'At FunkyyApps, we help visualize your ideas/goals into reality. With over 7 years of industry excellence, we fuse cutting-edge design with advanced development to deliver bold, future-ready solutions.'
 
 export function Home() {
-  const cols = [testimonials.slice(0, 3), testimonials.slice(3, 6), testimonials.slice(6)]
   return (
     <>
       {/* ───────── Hero: the original hand-made hero, kept as it was (pixel canvas + sticker trail + flip text) ───────── */}
@@ -53,29 +52,17 @@ export function Home() {
         </div>
       </StickerTrail>
 
-      {/* ───────── Trusted By: Magic UI 3D marquee (desktop) / two rows (mobile) ───────── */}
+      {/* ───────── Trusted By: the clients' logo cards as a fanned deck, quote beside the front card ───────── */}
       <section className="section pt-10">
-        <div className="wrap grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <h2 className="max-w-[14ch] text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">
-            Trusted By <span className="text-butter"><NumberTicker value={100} />+</span> Brand Owners
-          </h2>
-          <div className="relative hidden h-[560px] items-center justify-center overflow-hidden [perspective:900px] lg:flex">
-            <div className="flex flex-row gap-4" style={{ transform: 'translateX(-40px) translateZ(-60px) rotateX(16deg) rotateY(-9deg) rotateZ(9deg)' }}>
-              {cols.map((col, i) => (
-                <Marquee key={i} vertical pauseOnHover reverse={i === 1} repeat={3} className="h-[720px] [--duration:38s] [--gap:1rem]">
-                  {col.map((t) => <TestimonialCard key={t.name} t={t} className="w-[280px]" />)}
-                </Marquee>
-              ))}
-            </div>
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-ink" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-ink" />
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/5 bg-linear-to-r from-ink" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 bg-linear-to-l from-ink" />
-          </div>
-        </div>
-        {/* phones/tablets: one row (all testimonials) instead of two */}
-        <div className="relative mt-8 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] lg:hidden">
-          <Marquee pauseOnHover repeat={2} className="[--duration:90s] [--gap:1rem]">{testimonials.map((t) => <TestimonialCard key={t.name} t={t} className="self-start" />)}</Marquee>
+        <div className="wrap">
+          <BrandDeck
+            items={testimonials}
+            heading={
+              <h2 className="max-w-[14ch] text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">
+                Trusted By <span className="whitespace-nowrap text-butter"><NumberTicker value={100} />+</span> Brand Owners
+              </h2>
+            }
+          />
         </div>
       </section>
 
