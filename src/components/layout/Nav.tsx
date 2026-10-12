@@ -76,7 +76,8 @@ export function Nav() {
           width="100%"
           openId={open}
           onOpenChange={setOpen}
-          start={<Logo className="mr-4 text-[22px]" />}
+          // full-size logo at the top of the page; it eases down when the bar compacts on scroll (and on tablets), so Consult always fits
+          start={<Logo className="mr-4" imgClassName={compact ? 'h-11' : 'h-11 lg:h-16'} />}
           items={[{ id: 'services', label: 'Services', panel: <ServicesPanel /> }]}
           end={
             <div className="flex items-center gap-1">
@@ -98,7 +99,7 @@ export function Nav() {
           openId={open}
           onOpenChange={setOpen}
           openOnHover={false}
-          start={<Logo className="text-[22px]" />}
+          start={<Logo />}
           items={[{ id: 'menu', label: open === 'menu' ? 'Close' : 'Menu', panel: <MobilePanel /> }]}
           triggerClassName="bg-ink-3 px-5 py-2.5 text-bone"
         />
