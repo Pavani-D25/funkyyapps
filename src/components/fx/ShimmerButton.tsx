@@ -10,9 +10,9 @@ type Props = { children: ReactNode; to?: string; href?: string; onClick?: () => 
 export function ShimmerButton({ children, to, href, onClick, type = 'button', variant = 'tang', className }: Props) {
   const cls = cn(
     'relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3.5 text-[15px] font-semibold transition-transform duration-200 active:scale-[.96] select-none',
-    variant === 'tang' && 'bg-tang text-ink',
+    variant === 'tang' && 'neon-btn bg-tang text-ink',
     variant === 'bone' && 'bg-bone text-ink',
-    variant === 'ghost' && 'border border-line text-bone hover:border-mist',
+    variant === 'ghost' && 'neon-ghost border border-line text-bone hover:border-mist',
     className
   )
   const inner = (

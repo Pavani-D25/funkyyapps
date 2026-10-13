@@ -1,4 +1,6 @@
-import { ArrowDownRight, MessageCircle, Phone } from 'lucide-react'
+import { ArrowDownRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { WhatsAppIcon } from '@/components/ui/whatsapp-icon'
 import { PixelLiquid } from '@/components/fx/PixelLiquid'
 import { StickerTrail } from '@/components/fx/StickerTrail'
 import { MorphText } from '@/components/fx/MorphText'
@@ -34,14 +36,14 @@ export function Home() {
           </p>
           <h1 className="mt-6 font-black leading-[0.9] tracking-[-0.045em]">
             <span className="block text-[clamp(2.5rem,9.2vw,9.5rem)]">{hero.lines[0]}</span>
-            <span className="block text-[clamp(2.5rem,9.2vw,9.5rem)] text-tang">{hero.lines[1]}</span>
+            <span className="neon-text block text-[clamp(2.5rem,9.2vw,9.5rem)] text-tang">{hero.lines[1]}</span>
           </h1>
           <div className="mt-10 grid items-end gap-10 md:mt-14 md:grid-cols-[1.1fr_1fr]">
             <div>
               <p className="max-w-[30ch] font-display text-xl font-semibold leading-snug md:text-2xl">{hero.tagline}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <ShimmerButton href="#quote">Get a quote <ArrowDownRight size={18} /></ShimmerButton>
-                <ShimmerButton href={contact.whatsappUrl} variant="ghost"><MessageCircle size={18} /> WhatsApp: {contact.whatsapp}</ShimmerButton>
+                <ShimmerButton href={contact.whatsappUrl} variant="ghost"><WhatsAppIcon size={18} /> WhatsApp: {contact.whatsapp}</ShimmerButton>
               </div>
             </div>
             <div className="max-w-[46ch] space-y-3 text-mist md:justify-self-end">
@@ -59,7 +61,7 @@ export function Home() {
             items={testimonials}
             heading={
               <h2 className="max-w-[14ch] text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">
-                Trusted By <span className="whitespace-nowrap text-butter"><NumberTicker value={100} />+</span> Brand Owners
+                Trusted By <span className="neon-text whitespace-nowrap text-butter"><NumberTicker value={100} />+</span> Brand Owners
               </h2>
             }
           />
@@ -125,6 +127,7 @@ export function Home() {
             <p className="mb-4 inline-block rounded-full bg-butter px-3 py-1 font-display text-xs font-bold text-ink">Our pricing</p>
             <h2 className="text-[1.8rem] font-extrabold sm:text-4xl md:text-6xl">Features You Need, Budget You Love</h2>
             <p className="mt-5 text-lg text-mist">Compare Packages &amp; Build Your Ideal Website.</p>
+            <Link to="/pricing" className="neon-ghost mt-6 inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-[15px] font-semibold">Need something custom? Try the quote calculator <ArrowDownRight size={16} className="-rotate-90" /></Link>
           </div>
           {/* desktop: Skiper sticky stack; phones/tablets: swipe through the plans */}
           <StickyStack stickyClassName="lg:sticky" className="hidden gap-14 lg:grid" scaleStep={0.04}>{plans.map((p, i) => <PlanCard key={p.name} plan={p} index={i} />)}</StickyStack>
@@ -161,12 +164,12 @@ function PlanCard({ plan, index, compact }: { plan: Plan; index: number; compact
             </div>
             <p className="mt-6 text-sm text-mist">{plan.forLabel}</p>
             <p className="mt-1 max-w-[34ch] text-lg">{plan.forText}</p>
-            <p className={cn('font-display font-black tracking-tight', compact ? 'mt-5 text-5xl' : 'mt-8 text-6xl md:text-7xl')} style={{ color: PLAN_COLORS[index] }}>
+            <p className={cn('neon-text font-display font-black tracking-tight', compact ? 'mt-5 text-5xl' : 'mt-8 text-6xl md:text-7xl')} style={{ color: PLAN_COLORS[index] }}>
               <span className="align-top text-3xl">$</span>{plan.price}
             </p>
             <div className="mt-8 flex flex-wrap gap-3 lg:mt-auto lg:pt-8">
               <Cta href="#quote" variant={featured ? 'primary' : 'shiny'}>Start Now</Cta>
-              <Cta href={contact.whatsappUrl} variant="ghost"><Phone size={16} /> Call Now</Cta>
+              <Cta href={contact.whatsappUrl} variant="ghost"><WhatsAppIcon size={16} /> Call Now</Cta>
             </div>
           </div>
           <div className="min-w-0">

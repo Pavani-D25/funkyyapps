@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { contact, packages, paypal, questionnaireLinks, quickLinks, servicesNav } from '@/data/site'
 import { CopyChip } from '@/components/sections/CopyChip'
+import { WhatsAppIcon } from '@/components/ui/whatsapp-icon'
 import { Marquee } from '@/components/ui/marquee'
 import { FlipText } from '@/components/ui/flip-text'
 
@@ -15,7 +16,7 @@ export function Footer() {
             return (
               <div key={p.name} className="flex shrink-0 items-center gap-4 rounded-full border border-line bg-ink py-2 pr-2 pl-5">
                 <span className="text-[15px]">{p.name}</span>
-                <span className="font-display font-bold text-butter">({p.price})</span>
+                <span className="neon-text font-display font-bold text-butter">({p.price})</span>
                 {link
                   ? <a href={link} target="_blank" rel="noreferrer" className="rounded-full bg-bone px-4 py-1.5 text-sm font-semibold text-ink">Pay with PayPal</a>
                   : <Link to="/shop" className="rounded-full bg-bone px-4 py-1.5 text-sm font-semibold text-ink">Pay with PayPal</Link>}
@@ -30,7 +31,7 @@ export function Footer() {
           <h3 className="text-2xl font-extrabold lg:text-3xl">Let's Talk!</h3>
           <p className="mt-3 max-w-[36ch] text-mist">Thanks for stopping by! We’re here to help, please don’t hesitate to reach out.</p>
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:max-w-sm lg:grid-cols-1">
-            <CopyChip label="WhatsApp" value={contact.whatsapp} href={contact.whatsappUrl} />
+            <CopyChip label="WhatsApp" value={contact.whatsapp} href={contact.whatsappUrl} icon={<WhatsAppIcon size={22} />} />
             <CopyChip label="We'd love to hear from you" value={contact.email} href={`mailto:${contact.email}`} />
           </div>
         </div>
@@ -52,9 +53,9 @@ export function Footer() {
         <span>© {new Date().getFullYear()} FUNKYY APPS</span>
         <span>Experts in Web Design, Product Development &amp; Search Engine Marketing</span>
       </div>
-      {/* Vengeance UI "Flip Text": the neon wordmark keeps flipping once it scrolls into view */}
-      <div aria-hidden className="pointer-events-none -mb-[0.18em] overflow-hidden text-center font-display text-[24vw] leading-none font-black tracking-tighter text-tang select-none [filter:drop-shadow(0_0_18px_rgb(255_107_44/0.55))_drop-shadow(0_0_42px_rgb(177_77_255/0.35))]">
-        <FlipText playOnView duration={3.2} className="leading-none">funkyy</FlipText>
+      {/* Vengeance UI "Flip Text": the full neon wordmark keeps flipping once it scrolls into view */}
+      <div aria-hidden className="pointer-events-none -mb-[0.18em] overflow-hidden text-center font-display text-[11.5vw] leading-none font-black tracking-tighter text-tang select-none [filter:drop-shadow(0_0_18px_rgb(255_107_44/0.55))_drop-shadow(0_0_42px_rgb(177_77_255/0.35))]">
+        <FlipText playOnView duration={3.2} className="leading-none">funkyyapps</FlipText>
       </div>
     </footer>
   )

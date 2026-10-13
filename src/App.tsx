@@ -13,6 +13,7 @@ const Ppc = lazy(pageLoaders.Ppc)
 const WebDev = lazy(pageLoaders.WebDev)
 const Mobile = lazy(pageLoaders.Mobile)
 const Shop = lazy(pageLoaders.Shop)
+const Pricing = lazy(pageLoaders.Pricing)
 const Faqs = lazy(pageLoaders.Faqs)
 const Consult = lazy(pageLoaders.Consult)
 const Terms = lazy(pageLoaders.Terms)
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="website-development" element={<WebDev />} />
             <Route path="mobile-app-development" element={<Mobile />} />
             <Route path="shop" element={<Shop />} />
+            <Route path="pricing" element={<Pricing />} />
             <Route path="faqs" element={<Faqs />} />
             <Route path="consult" element={<Consult />} />
             <Route path="terms-and-conditions" element={<Terms />} />

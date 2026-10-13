@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { PageHero } from '@/components/sections/PageHero'
 import { Cta } from '@/components/Cta'
 import { CopyChip } from '@/components/sections/CopyChip'
+import { WhatsAppIcon } from '@/components/ui/whatsapp-icon'
 import { FormNotice } from '@/components/sections/FormNotice'
 import { sendForm, type SendResult } from '@/lib/forms'
 import { contact } from '@/data/site'
@@ -24,7 +25,7 @@ export function Consult() {
           <div className="grid gap-3 sm:col-span-2"><FormNotice state={state} /><Cta type="submit" className="justify-self-start">Get in touch</Cta></div>
         </form>
         <aside className="grid content-start gap-3">
-          <CopyChip label="WhatsApp" value={contact.whatsapp} href={contact.whatsappUrl} />
+          <CopyChip label="WhatsApp" value={contact.whatsapp} href={contact.whatsappUrl} icon={<WhatsAppIcon size={22} />} />
           <CopyChip label="Text Us" value={contact.sms} href={`sms:${contact.sms}`} />
           <CopyChip label="Email Us" value={contact.email} href={`mailto:${contact.email}`} />
         </aside>

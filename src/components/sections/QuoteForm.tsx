@@ -39,12 +39,12 @@ export function QuoteForm() {
             ))}
           </ul>
           {!open && (
-            <button type="button" onClick={() => setOpen(true)} aria-controls="quote-form" aria-expanded={false} className="mt-8 inline-flex items-center gap-2 rounded-full bg-tang px-6 py-3.5 text-[15px] font-semibold text-ink active:scale-[.97] lg:hidden">
+            <button type="button" onClick={() => setOpen(true)} aria-controls="quote-form" aria-expanded={false} className="neon-btn mt-8 inline-flex items-center gap-2 rounded-full bg-tang px-6 py-3.5 text-[15px] font-semibold text-ink active:scale-[.97] lg:hidden">
               Get a quote <ChevronDown size={18} />
             </button>
           )}
         </div>
-        <form id="quote-form" onSubmit={onSubmit} className={cn('grid gap-4 rounded-[28px] border border-line bg-ink-2 p-5 sm:grid-cols-2 md:p-8', !open && 'hidden lg:grid')}>
+        <form id="quote-form" onSubmit={onSubmit} className={cn('neon-panel grid gap-4 rounded-[28px] border border-line bg-ink-2 p-5 sm:grid-cols-2 md:p-8', !open && 'hidden lg:grid')}>
           <label className="grid gap-1.5 text-sm text-mist">First Name<input id="q-first" name="first_name" required className="field" autoComplete="given-name" /></label>
           <label className="grid gap-1.5 text-sm text-mist">Last Name<input id="q-last" name="last_name" className="field" autoComplete="family-name" /></label>
           <label className="grid gap-1.5 text-sm text-mist">Email Address<input id="q-email" name="email" type="email" required className="field" autoComplete="email" /></label>

@@ -189,15 +189,15 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 .site-pan { animation: site-pan var(--pan, 26s) ease-in-out infinite; }
 .site-pan:hover { animation-play-state: paused; }
 
-/* ── Homepage neon backdrop (components/fx/NeonBackdrop) ──
+/* ── Neon backdrop base layers (components/fx/NeonBackdrop); colours come from the page palette ──
    Night ground + four neon clouds (tangerine, violet, logo green, cyan) that drift on long loops,
    a synthwave grid floor rolling toward the viewer, and a pointer glow. Screen-blended so they mix like light. */
 .neon-backdrop { background: radial-gradient(120% 80% at 50% 0%, #0b1a24 0%, #060b10 55%, #04070a 100%); }
 .neon-blob { position: absolute; width: 62vmax; aspect-ratio: 1; border-radius: 50%; mix-blend-mode: screen; opacity: .8; will-change: transform; }
-.neon-blob-1 { top: -22vmax; left: -18vmax; background: radial-gradient(circle, rgb(255 107 44 / .75) 0%, rgb(255 107 44 / .18) 38%, transparent 66%); animation: neon-drift-a 28s ease-in-out infinite alternate; }
-.neon-blob-2 { top: 6vh; right: -26vmax; background: radial-gradient(circle, rgb(177 77 255 / .8) 0%, rgb(177 77 255 / .2) 40%, transparent 66%); animation: neon-drift-b 34s ease-in-out infinite alternate; }
-.neon-blob-3 { bottom: -34vmax; left: 8vw; background: radial-gradient(circle, rgb(24 227 155 / .6) 0%, rgb(24 227 155 / .14) 40%, transparent 66%); animation: neon-drift-c 31s ease-in-out infinite alternate; }
-.neon-blob-4 { width: 42vmax; top: 38vh; left: 38vw; background: radial-gradient(circle, rgb(34 211 238 / .55) 0%, rgb(34 211 238 / .12) 40%, transparent 66%); animation: neon-drift-d 23s ease-in-out infinite alternate; }
+.neon-blob-1 { top: -22vmax; left: -18vmax; background: radial-gradient(circle, color-mix(in srgb, var(--n1) 75%, transparent) 0%, color-mix(in srgb, var(--n1) 18%, transparent) 38%, transparent 66%); animation: neon-drift-a 28s ease-in-out infinite alternate; }
+.neon-blob-2 { top: 6vh; right: -26vmax; background: radial-gradient(circle, color-mix(in srgb, var(--n2) 80%, transparent) 0%, color-mix(in srgb, var(--n2) 20%, transparent) 40%, transparent 66%); animation: neon-drift-b 34s ease-in-out infinite alternate; }
+.neon-blob-3 { bottom: -34vmax; left: 8vw; background: radial-gradient(circle, color-mix(in srgb, var(--n3) 60%, transparent) 0%, color-mix(in srgb, var(--n3) 14%, transparent) 40%, transparent 66%); animation: neon-drift-c 31s ease-in-out infinite alternate; }
+.neon-blob-4 { width: 42vmax; top: 38vh; left: 38vw; background: radial-gradient(circle, color-mix(in srgb, var(--n4) 55%, transparent) 0%, color-mix(in srgb, var(--n4) 12%, transparent) 40%, transparent 66%); animation: neon-drift-d 23s ease-in-out infinite alternate; }
 @keyframes neon-drift-a { to { transform: translate(22vw, 18vh) scale(1.15) } }
 @keyframes neon-drift-b { to { transform: translate(-26vw, 30vh) scale(.9) } }
 @keyframes neon-drift-c { to { transform: translate(30vw, -22vh) scale(1.2) } }
@@ -210,7 +210,49 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 @keyframes neon-grid-run { to { background-position: 0 72px, 0 0 } }
 .neon-spot { position: absolute; left: 0; top: 0; width: 620px; height: 620px; margin: -310px 0 0 -310px; opacity: 0; transition: opacity .6s;
   border-radius: 50%; mix-blend-mode: screen; will-change: transform;
-  background: radial-gradient(circle, rgb(255 107 44 / .28) 0%, rgb(177 77 255 / .16) 35%, transparent 68%); }
+  background: radial-gradient(circle, color-mix(in srgb, var(--n1) 28%, transparent) 0%, color-mix(in srgb, var(--n2) 16%, transparent) 35%, transparent 68%); }
+
+/* ── Neon accents (buttons, prices, key numbers, panels) ──
+   --neon picks the glow colour (defaults to tangerine). Buttons breathe slowly; hover brightens. */
+.neon-btn { --neon: var(--color-tang); box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon) 70%, transparent), 0 0 18px color-mix(in srgb, var(--neon) 55%, transparent), 0 0 46px color-mix(in srgb, var(--neon) 28%, transparent); animation: neon-breathe 3.4s ease-in-out infinite; transition: box-shadow .25s, transform .2s; }
+.neon-btn:hover, .neon-btn:focus-visible { animation-play-state: paused; box-shadow: 0 0 0 1px var(--neon), 0 0 24px color-mix(in srgb, var(--neon) 80%, transparent), 0 0 70px color-mix(in srgb, var(--neon) 45%, transparent); }
+@keyframes neon-breathe { 50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon) 45%, transparent), 0 0 10px color-mix(in srgb, var(--neon) 35%, transparent), 0 0 26px color-mix(in srgb, var(--neon) 16%, transparent); } }
+.neon-ghost { --neon: var(--color-lilac); transition: box-shadow .25s, border-color .25s; }
+.neon-ghost:hover, .neon-ghost:focus-visible { border-color: var(--neon); box-shadow: 0 0 16px color-mix(in srgb, var(--neon) 45%, transparent), inset 0 0 12px color-mix(in srgb, var(--neon) 18%, transparent); }
+.neon-text { text-shadow: 0 0 6px color-mix(in srgb, currentColor 55%, transparent), 0 0 24px color-mix(in srgb, currentColor 40%, transparent), 0 0 60px color-mix(in srgb, currentColor 22%, transparent); }
+.neon-panel { --neon: var(--color-lilac); border-color: color-mix(in srgb, var(--neon) 45%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon) 18%, transparent), 0 0 40px -8px color-mix(in srgb, var(--neon) 40%, transparent), inset 0 0 40px -20px color-mix(in srgb, var(--neon) 35%, transparent); }
+
+/* ── Per-page neon scenes (components/fx/NeonBackdrop). --n1/--n2/--n3/--n4 are set per page. ──
+   synth: grid floor (home) · beams: sweeping light beams (services) · rings: pulsing halo (about)
+   prism: turning colour wheel over a dot matrix (shop, pricing) · aurora: ribbons + stars (everything else) */
+.neon-beam { position: absolute; top: -30%; height: 160%; width: 12vw; min-width: 90px; mix-blend-mode: screen; opacity: .55; transform: translateX(-30vw) rotate(-16deg); will-change: transform;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--beam) 70%, transparent) 50%, transparent); animation: neon-sweep var(--d, 14s) linear infinite; animation-delay: var(--delay, 0s); }
+@keyframes neon-sweep { to { transform: translateX(130vw) rotate(-16deg) } }
+.neon-rings { position: absolute; inset: -20%; mix-blend-mode: screen; opacity: .6; will-change: transform;
+  background: repeating-radial-gradient(circle at 72% 38%, transparent 0 58px, color-mix(in srgb, var(--n1) 75%, transparent) 60px 62px, transparent 64px 120px);
+  mask-image: radial-gradient(circle at 72% 38%, #000 0%, transparent 62%); animation: neon-pulse 7s ease-in-out infinite; }
+.neon-rings.alt { opacity: .4; background: repeating-radial-gradient(circle at 72% 38%, transparent 0 88px, color-mix(in srgb, var(--n2) 75%, transparent) 90px 92px, transparent 94px 150px); animation-duration: 9s; animation-direction: reverse; }
+@keyframes neon-pulse { 0%, 100% { transform: scale(1) } 50% { transform: scale(1.12) } }
+.neon-prism { position: absolute; left: 50%; top: 45%; width: 140vmax; aspect-ratio: 1; margin: -70vmax 0 0 -70vmax; mix-blend-mode: screen; opacity: .32; will-change: transform;
+  background: conic-gradient(from 0deg, var(--n1), transparent 18%, var(--n2) 33%, transparent 50%, var(--n3) 66%, transparent 82%, var(--n1));
+  mask-image: radial-gradient(circle, #000 0%, transparent 55%); animation: neon-spin 60s linear infinite; }
+@keyframes neon-spin { to { transform: rotate(1turn) } }
+.neon-dots { position: absolute; inset: 0; opacity: .5;
+  background: radial-gradient(circle, color-mix(in srgb, var(--n2) 80%, transparent) 1.2px, transparent 1.8px) 0 0 / 26px 26px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, #000 0%, transparent 75%); }
+.neon-ribbon { position: absolute; left: -30%; width: 160%; height: 26vh; mix-blend-mode: screen; opacity: .5; filter: saturate(1.2); will-change: transform;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ribbon) 70%, transparent) 30%, color-mix(in srgb, var(--ribbon) 25%, transparent) 60%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%, #000 55%, transparent); animation: neon-wave var(--d, 18s) ease-in-out infinite alternate; }
+@keyframes neon-wave { from { transform: translateX(-8%) skewY(-6deg) } to { transform: translateX(8%) skewY(5deg) } }
+.neon-stars { position: absolute; inset: 0; opacity: .7; animation: neon-twinkle 4s ease-in-out infinite alternate;
+  background-image: radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 28% 62%, #fff, transparent), radial-gradient(1.5px 1.5px at 47% 33%, #fff, transparent), radial-gradient(1px 1px at 63% 78%, #fff, transparent), radial-gradient(1.5px 1.5px at 78% 22%, #fff, transparent), radial-gradient(1px 1px at 88% 55%, #fff, transparent), radial-gradient(1px 1px at 8% 82%, #fff, transparent), radial-gradient(1.5px 1.5px at 36% 90%, #fff, transparent);
+  background-size: 640px 640px; }
+@keyframes neon-twinkle { to { opacity: .3 } }
+
+/* Quote calculator slider: neon track filled up to the thumb (--fill set inline) */
+.calc-range { appearance: none; height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--color-tang) var(--fill), var(--color-ink-3) var(--fill)); box-shadow: 0 0 14px rgb(255 107 44 / .35); cursor: pointer; }
+.calc-range::-webkit-slider-thumb { appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--color-bone); border: 4px solid var(--color-tang); box-shadow: 0 0 16px rgb(255 107 44 / .8); }
+.calc-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--color-bone); border: 4px solid var(--color-tang); box-shadow: 0 0 16px rgb(255 107 44 / .8); }
 
 /* Trusted By deck: the bar under the quote fills while the front card waits */
 @keyframes deck-progress { from { transform: scaleX(0) } to { transform: scaleX(1) } }
@@ -218,7 +260,7 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .flip-char, .flip-char::before, .flip-char::after { animation: none !important; }
-  .animate-marquee, .animate-marquee-vertical, .animate-orbit, .site-pan, .neon-blob, .neon-grid { animation: none !important; }
+  .animate-marquee, .animate-marquee-vertical, .animate-orbit, .site-pan, .neon-blob, .neon-grid, .neon-beam, .neon-rings, .neon-prism, .neon-ribbon, .neon-stars, .neon-btn { animation: none !important; }
 }
 
 /* swipe rows: scrollable, but without a visible scrollbar */

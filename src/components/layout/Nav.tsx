@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 const main = [
   { label: 'About', to: '/about' },
   { label: 'Shop', to: '/shop' },
+  { label: 'Pricing', to: '/pricing' },
   { label: "FAQ's", to: '/faqs' },
 ]
 
@@ -50,7 +51,7 @@ function MobilePanel() {
         {[{ label: 'Home', to: '/' }, ...main, { label: 'Terms & Conditions', to: '/terms-and-conditions' }].map((l) => (
           <Link key={l.to} to={l.to} className="rounded-2xl px-3 py-2 text-[15px] hover:bg-ink-3">{l.label}</Link>
         ))}
-        <Link to="/consult" className="mt-3 rounded-full bg-tang px-5 py-3 text-center font-semibold text-ink">Consult</Link>
+        <Link to="/consult" className="neon-btn mt-3 rounded-full bg-tang px-5 py-3 text-center font-semibold text-ink">Consult</Link>
       </div>
     </div>
   )
@@ -68,16 +69,16 @@ export function Nav() {
     <div className="fixed inset-x-0 z-50 flex justify-center px-3" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 14px)' }}>
       {/* desktop */}
       <motion.div
-        className="hidden w-full md:block"
-        animate={{ maxWidth: open ? 880 : compact ? 780 : 1100 }}
+        className="hidden w-full lg:block"
+        animate={{ maxWidth: open ? 920 : compact ? 860 : 1100 }}
         transition={{ type: 'spring', stiffness: 380, damping: 34 }}
       >
         <ExpandableNavbar
           width="100%"
           openId={open}
           onOpenChange={setOpen}
-          // full-size logo at the top of the page; it eases down when the bar compacts on scroll (and on tablets), so Consult always fits
-          start={<Logo className="mr-4" imgClassName={compact ? 'h-11' : 'h-11 lg:h-16'} />}
+          // full-size logo at the top of the page; it eases down when the bar compacts on scroll, so Consult always fits
+          start={<Logo className="mr-4" imgClassName={compact ? 'h-11' : 'h-16'} />}
           items={[{ id: 'services', label: 'Services', panel: <ServicesPanel /> }]}
           end={
             <div className="flex items-center gap-1">
@@ -86,14 +87,14 @@ export function Nav() {
                   {l.label}
                 </NavLink>
               ))}
-              <Link to="/consult" className="ml-2 rounded-full bg-tang px-5 py-2.5 text-[15px] font-semibold text-ink transition-transform active:scale-95">Consult</Link>
+              <Link to="/consult" className="neon-btn ml-2 rounded-full bg-tang px-5 py-2.5 text-[15px] font-semibold text-ink transition-transform active:scale-95">Consult</Link>
             </div>
           }
         />
       </motion.div>
 
-      {/* mobile */}
-      <div className="w-full md:hidden">
+      {/* phones + tablets */}
+      <div className="w-full lg:hidden">
         <ExpandableNavbar
           width="100%"
           openId={open}

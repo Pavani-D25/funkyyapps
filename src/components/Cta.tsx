@@ -31,17 +31,17 @@ export function Cta({ children, to, href, type = 'button', variant = 'primary', 
   ) : null
 
   if (variant === 'ghost') {
-    const cls = cn('inline-flex items-center justify-center gap-2 rounded-full border border-line px-6 py-3.5 text-[15px] font-semibold text-bone transition-colors hover:border-mist active:scale-[.97]', className)
+    const cls = cn('neon-ghost inline-flex items-center justify-center gap-2 rounded-full border border-line px-6 py-3.5 text-[15px] font-semibold text-bone transition-colors hover:border-mist active:scale-[.97]', className)
     if (to) return <Link to={to} className={cls}>{children}</Link>
     if (href) return <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined} className={cls}>{children}</a>
     return <button type={type} className={cls}>{children}</button>
   }
 
   if (variant === 'shiny') {
-    return target ? <ShinyButton asChild className={className}>{target}</ShinyButton> : <ShinyButton type={type} className={className}>{children}</ShinyButton>
+    return target ? <ShinyButton asChild className={cn('neon-ghost', className)}>{target}</ShinyButton> : <ShinyButton type={type} className={cn('neon-ghost', className)}>{children}</ShinyButton>
   }
 
   const ink = tone === 'ink'
-  const shimmer = { background: ink ? 'var(--color-ink)' : 'var(--color-tang)', shimmerColor: ink ? '#ff9a6b' : '#fff4e8', className: cn(ink && 'text-bone', className) }
+  const shimmer = { background: ink ? 'var(--color-ink)' : 'var(--color-tang)', shimmerColor: ink ? '#ff9a6b' : '#fff4e8', className: cn('neon-btn', ink && 'text-bone', className) }
   return target ? <ShimmerButton asChild {...shimmer}>{target}</ShimmerButton> : <ShimmerButton type={type} {...shimmer}>{children}</ShimmerButton>
 }

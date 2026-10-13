@@ -8,6 +8,7 @@ export const pageLoaders = {
   WebDev: () => import('./WebDev').then((m) => ({ default: m.WebDev })),
   Mobile: () => import('./Mobile').then((m) => ({ default: m.Mobile })),
   Shop: () => import('./Shop').then((m) => ({ default: m.Shop })),
+  Pricing: () => import('./Pricing').then((m) => ({ default: m.Pricing })),
   Faqs: () => import('./Faqs').then((m) => ({ default: m.Faqs })),
   Consult: () => import('./Consult').then((m) => ({ default: m.Consult })),
   Terms: () => import('./Terms').then((m) => ({ default: m.Terms })),

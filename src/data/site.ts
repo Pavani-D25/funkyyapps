@@ -28,6 +28,7 @@ export const quickLinks = [
   { label: 'About', to: '/about' },
   { label: 'Terms & Conditions', to: '/terms-and-conditions' },
   { label: 'Shop', to: '/shop' },
+  { label: 'Pricing', to: '/pricing' },
   { label: "Faq's", to: '/faqs' },
   { label: 'Consult', to: '/consult' },
 ]

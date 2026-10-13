@@ -37,7 +37,7 @@ export function Shop() {
               <div className="flex flex-1 flex-col p-7">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <h2 className="text-2xl font-extrabold">{s.title}</h2>
-                  <p className="font-display text-2xl font-black text-tang">({s.price})</p>
+                  <p className="neon-text font-display text-2xl font-black text-tang">({s.price})</p>
                 </div>
                 <p className="mt-3 text-mist">{s.text}</p>
                 <div className="mt-auto pt-7"><Cta href={link}>Shop Now</Cta></div>

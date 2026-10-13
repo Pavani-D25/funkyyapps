@@ -1,14 +1,16 @@
 import { Suspense, useEffect } from 'react'
 import { useLocation, useNavigate, useOutlet } from 'react-router-dom'
 import Lenis from 'lenis'
-import { Mail, MessageCircle, CalendarClock, ShoppingBag } from 'lucide-react'
+import { Mail, CalendarClock, ShoppingBag } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Nav } from './Nav'
 import { Footer } from './Footer'
 import { NeonBackdrop } from '@/components/fx/NeonBackdrop'
+import { lookFor } from '@/data/neon-looks'
 import { QuoteForm } from '@/components/sections/QuoteForm'
 import { SpringCursor } from '@/components/ui/skiper-ui/skiper61'
 import { Dock } from '@/components/unlumen-ui/dock'
+import { WhatsAppIcon } from '@/components/ui/whatsapp-icon'
 import { contact } from '@/data/site'
 import { setLenis, getLenis } from '@/lib/scroll'
 import { usePageMeta } from '@/lib/meta'
@@ -41,8 +43,10 @@ export function Layout() {
 
   return (
     <div className="grain">
-      {/* homepage only: neon backdrop behind everything (fades in/out with the route change) */}
-      <AnimatePresence>{pathname === '/' && <NeonBackdrop key="neon" />}</AnimatePresence>
+      {/* each page's own neon scene behind everything; crossfades when the scene changes */}
+      <AnimatePresence initial={false}>
+        {(() => { const look = lookFor(pathname); return <NeonBackdrop key={`${look.scene}-${look.colors.join()}`} look={look} /> })()}
+      </AnimatePresence>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-full focus:bg-bone focus:px-4 focus:py-2 focus:text-ink">Skip to content</a>
       <Nav />
       {/* route transition: AnimatePresence keeps the outgoing page (frozen outlet) until it has faded */}
@@ -66,7 +70,7 @@ export function Layout() {
           iconSize={44}
           magnification={1.45}
           items={[
-            { label: 'WhatsApp', icon: <MessageCircle />, href: contact.whatsappUrl, external: true },
+            { label: 'WhatsApp', icon: <WhatsAppIcon />, href: contact.whatsappUrl, external: true },
             { label: 'Email us', icon: <Mail />, href: `mailto:${contact.email}`, separator: true },
             { label: 'Consult', icon: <CalendarClock />, href: '/consult', onClick: go('/consult') },
             { label: 'Shop', icon: <ShoppingBag />, href: '/shop', onClick: go('/shop') },

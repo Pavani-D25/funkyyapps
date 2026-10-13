@@ -17,6 +17,7 @@ export const PAGES: Record<string, { title: string; description: string }> = {
   '/website-development': { title: webDev.title, description: firstSentence(webDev.intro[0]) },
   '/mobile-app-development': { title: mobile.title, description: firstSentence(mobile.intro) },
   '/shop': { title: 'Shop', description: DEFAULT_DESC },
+  '/pricing': { title: 'Pricing & Quote Calculator', description: DEFAULT_DESC },
   '/faqs': { title: 'Frequently Asked Questions', description: DEFAULT_DESC },
   '/consult': { title: 'Consult FunkyyApps', description: DEFAULT_DESC },
   '/terms-and-conditions': { title: terms.title, description: terms.intro },

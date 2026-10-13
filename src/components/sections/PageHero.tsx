@@ -1,11 +1,8 @@
 import type { ReactNode } from 'react'
-import { AnimatedRays } from '@/components/ui/animated-rays'
 
 export function PageHero({ title, children, kicker }: { title: string; kicker?: string; children?: ReactNode }) {
   return (
     <header className="relative overflow-hidden pt-40 pb-16 md:pt-48 md:pb-24">
-      {/* Vengeance UI "Animated Rays", in brand colours */}
-      <AnimatedRays className="pointer-events-none !absolute inset-0" />
       <div className="wrap relative">
         {kicker && <p className="mb-5 inline-block rounded-full bg-lilac px-3 py-1 font-display text-xs font-bold text-ink">{kicker}</p>}
         <h1 className="max-w-[16ch] text-[clamp(1.9rem,7vw,6rem)] font-black [overflow-wrap:anywhere] [hyphens:auto]">{title}</h1>
